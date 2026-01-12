@@ -11,6 +11,8 @@ node_modules
 dist
 dist-ssr
 *.local
+# Não ignorar docs (usado para GitHub Pages)
+# docs/
 
 # Editor directories and files
 .vscode/*
