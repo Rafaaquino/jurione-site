@@ -415,6 +415,40 @@ npm run build
 npm run lint
 ```
 
+### Erro de proteção do ambiente no GitHub Pages
+
+Se você receber o erro:
+
+```
+Branch "master" is not allowed to deploy to github-pages due to environment protection rules.
+```
+
+**Solução:**
+
+1. **Remover proteções do ambiente:**
+
+   - Vá em **Settings** → **Environments**
+   - Clique no ambiente **"github-pages"**
+   - Em **"Deployment branches"**, selecione **"All branches"** ou adicione `main` e `master` manualmente
+   - Em **"Required reviewers"**, remova qualquer aprovação necessária (se houver)
+   - Salve as alterações
+
+2. **Alternativa - Usar apenas branch main:**
+
+   - Se preferir, você pode renomear o branch `master` para `main`:
+
+   ```bash
+   git branch -m master main
+   git push -u origin main
+   ```
+
+   - E atualizar o workflow para usar apenas `main` (já está configurado)
+
+3. **Verificar permissões:**
+   - Vá em **Settings** → **Actions** → **General**
+   - Em **"Workflow permissions"**, certifique-se de que está marcado **"Read and write permissions"**
+   - Salve as alterações
+
 ## 📝 Próximos Passos
 
 - [ ] Integração completa com API de cadastro
