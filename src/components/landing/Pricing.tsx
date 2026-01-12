@@ -93,6 +93,20 @@ export function Pricing() {
 
   // Determina a URL base do sistema
   const getSystemUrl = (): string => {
+    // Verifica o modo do Vite (development, production, etc.)
+    const appMode = import.meta.env.MODE;
+
+    // Se estiver em modo production explícito, usa produção
+    if (appMode === "production") {
+      return systemUrls.production;
+    }
+
+    // Se estiver em modo development explícito, usa localhost
+    if (appMode === "development") {
+      return systemUrls.development;
+    }
+
+    // Fallback: detecta pelo hostname (comportamento original)
     const hostname = window.location.hostname;
 
     if (hostname === "localhost" || hostname === "127.0.0.1") {

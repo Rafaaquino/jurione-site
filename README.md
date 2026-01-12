@@ -335,17 +335,20 @@ A landing page está configurada para deploy automático no GitHub Pages com dom
 #### Configuração Inicial
 
 1. **Habilitar GitHub Pages no repositório:**
+
    - Vá em **Settings** → **Pages**
    - Em **Source**, selecione **"GitHub Actions"**
    - Salve as configurações
 
 2. **Configurar domínio customizado:**
+
    - Em **Settings** → **Pages** → **Custom domain**
    - Digite: `jurione.com.br`
    - Marque **"Enforce HTTPS"**
    - Salve
 
 3. **Configurar DNS no seu provedor:**
+
    - Adicione um registro **CNAME** apontando para: `seu-usuario.github.io`
    - Ou adicione registros **A** com os IPs do GitHub Pages:
      - `185.199.108.153`
@@ -354,6 +357,7 @@ A landing page está configurada para deploy automático no GitHub Pages com dom
      - `185.199.111.153`
 
 4. **Fazer push para o branch main:**
+
    ```bash
    git add .
    git commit -m "feat: configura deploy automático"
