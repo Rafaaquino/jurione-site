@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 // URLs do sistema por ambiente
 const systemUrls = {
   development: "http://localhost:4200",
-  production: "https://app.jurione.com",
+  production: "https://jurione.app.br",
   homologation: "https://hml.jurione.com",
 };
 

@@ -328,11 +328,54 @@ npm run build
 
 O build será gerado na pasta `dist/` e pode ser servido por qualquer servidor estático (Nginx, Vercel, Netlify, etc.).
 
-### Deploy Recomendado
+### Deploy no GitHub Pages
+
+A landing page está configurada para deploy automático no GitHub Pages com domínio customizado `jurione.com.br`.
+
+#### Configuração Inicial
+
+1. **Habilitar GitHub Pages no repositório:**
+   - Vá em **Settings** → **Pages**
+   - Em **Source**, selecione **"GitHub Actions"**
+   - Salve as configurações
+
+2. **Configurar domínio customizado:**
+   - Em **Settings** → **Pages** → **Custom domain**
+   - Digite: `jurione.com.br`
+   - Marque **"Enforce HTTPS"**
+   - Salve
+
+3. **Configurar DNS no seu provedor:**
+   - Adicione um registro **CNAME** apontando para: `seu-usuario.github.io`
+   - Ou adicione registros **A** com os IPs do GitHub Pages:
+     - `185.199.108.153`
+     - `185.199.109.153`
+     - `185.199.110.153`
+     - `185.199.111.153`
+
+4. **Fazer push para o branch main:**
+   ```bash
+   git add .
+   git commit -m "feat: configura deploy automático"
+   git push origin main
+   ```
+
+5. **Verificar o deploy:**
+   - Vá em **Actions** no GitHub
+   - O workflow será executado automaticamente
+   - Após o deploy, acesse `https://jurione.com.br`
+
+#### URLs Configuradas
+
+- **Landing Page**: `https://jurione.com.br`
+- **Aplicação Principal**: `https://jurione.app.br`
+- **Botão "Entrar"**: Redireciona para `https://jurione.app.br/auth/login`
+- **Botão "Teste Grátis"**: Redireciona para `https://jurione.app.br/auth/signup`
+
+### Outras Opções de Deploy
 
 - **Vercel**: Integração direta com Git
 - **Netlify**: Deploy automático
-- **GitHub Pages**: Para hospedagem estática
 - **Nginx**: Servidor próprio
 
 ## 🐛 Troubleshooting

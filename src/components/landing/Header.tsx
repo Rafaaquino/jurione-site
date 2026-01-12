@@ -43,7 +43,11 @@ export function Header() {
         </nav>
 
         <div className="hidden md:flex items-center gap-4">
-          <Button variant="ghost" className="font-medium">
+          <Button 
+            variant="ghost" 
+            className="font-medium"
+            onClick={() => window.open("https://jurione.app.br/auth/login", "_blank", "noopener,noreferrer")}
+          >
             Entrar
           </Button>
           <Button
@@ -92,12 +96,19 @@ export function Header() {
                 <Button
                   variant="ghost"
                   className="w-full justify-center font-medium"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    window.open("https://jurione.app.br/auth/login", "_blank", "noopener,noreferrer");
+                  }}
                 >
                   Entrar
                 </Button>
                 <Button
                   className="w-full gradient-cta text-primary-foreground font-semibold"
-                  onClick={redirectToTrial}
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    redirectToTrial();
+                  }}
                 >
                   Teste Grátis
                 </Button>
