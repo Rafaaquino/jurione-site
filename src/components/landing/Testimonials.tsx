@@ -6,16 +6,18 @@ const testimonials = [
     name: "Dr. Ricardo Almeida",
     role: "Sócio Fundador",
     company: "Almeida & Associados",
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face",
+    image:
+      "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face",
     content:
-      "O JuriOne revolucionou nosso escritório. A IA para petições economiza em média 4 horas por dia da nossa equipe. O investimento se pagou no primeiro mês.",
+      "O JuriOne revolucionou nosso escritório. A IA para petições economiza em média 4 horas por dia da nossa equipe.",
     rating: 5,
   },
   {
     name: "Dra. Carla Santos",
     role: "Advogada Trabalhista",
     company: "Santos Advocacia",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=face",
+    image:
+      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=face",
     content:
       "Finalmente um sistema que entende o dia a dia de um advogado. A gestão de prazos e a integração com financeiro são impecáveis.",
     rating: 5,
@@ -24,7 +26,8 @@ const testimonials = [
     name: "Dr. Fernando Costa",
     role: "Advogado Civil",
     company: "Costa & Barros",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+    image:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
     content:
       "As petições geradas pela IA são de qualidade impressionante. Cita legislação atualizada e a estrutura é exatamente como eu faria manualmente.",
     rating: 5,
@@ -60,7 +63,8 @@ export function Testimonials() {
             transition={{ delay: 0.2 }}
             className="text-muted-foreground text-lg"
           >
-            Mais de 500 escritórios já transformaram sua produtividade com o JuriOne
+            Mais de 500 escritórios já transformaram sua produtividade com o
+            JuriOne
           </motion.p>
         </div>
 
@@ -75,13 +79,10 @@ export function Testimonials() {
               className="relative p-6 md:p-8 rounded-2xl bg-card border border-border hover:shadow-elevated transition-all group"
             >
               <Quote className="absolute top-6 right-6 w-8 h-8 text-primary/10 group-hover:text-primary/20 transition-colors" />
-              
+
               <div className="flex items-center gap-1 mb-4">
                 {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="w-4 h-4 fill-accent text-accent"
-                  />
+                  <Star key={i} className="w-4 h-4 fill-accent text-accent" />
                 ))}
               </div>
 

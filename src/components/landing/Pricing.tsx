@@ -18,9 +18,9 @@ const fallbackPlanos: Plano[] = [
   {
     id: 1,
     nome: "Básico",
-    preco: 290,
+    preco: 320,
     periodicidade: "mês",
-    usuarios: 2,
+    usuarios: 1,
     recursos: [
       "Gestão de Processos",
       "Gestão de Clientes",
@@ -32,9 +32,9 @@ const fallbackPlanos: Plano[] = [
   {
     id: 2,
     nome: "Profissional",
-    preco: 490,
+    preco: 990,
     periodicidade: "mês",
-    usuarios: 5,
+    usuarios: 4,
     recursos: [
       "Tudo do Básico",
       "IA para Petições (limitado)",
@@ -47,7 +47,7 @@ const fallbackPlanos: Plano[] = [
   {
     id: 3,
     nome: "Empresarial",
-    preco: 930,
+    preco: 2800,
     periodicidade: "mês",
     usuarios: 10,
     recursos: [
@@ -167,7 +167,8 @@ export function Pricing() {
             transition={{ delay: 0.2 }}
             className="text-muted-foreground text-lg"
           >
-            Todos os planos incluem 7 dias de trial grátis. Cancele quando quiser.
+            Todos os planos incluem 7 dias de trial grátis. Cancele quando
+            quiser.
           </motion.p>
         </div>
 
@@ -198,7 +199,9 @@ export function Pricing() {
                 )}
 
                 <div className="mb-6">
-                  <h3 className="font-display font-bold text-xl mb-2">{plano.nome}</h3>
+                  <h3 className="font-display font-bold text-xl mb-2">
+                    {plano.nome}
+                  </h3>
                   <p className="text-muted-foreground text-sm">
                     Até {plano.usuarios} usuário{plano.usuarios > 1 ? "s" : ""}
                   </p>
@@ -210,7 +213,9 @@ export function Pricing() {
                     <span className="font-display font-extrabold text-4xl md:text-5xl">
                       {plano.preco}
                     </span>
-                    <span className="text-muted-foreground">/{plano.periodicidade}</span>
+                    <span className="text-muted-foreground">
+                      /{plano.periodicidade}
+                    </span>
                   </div>
                 </div>
 
@@ -218,7 +223,9 @@ export function Pricing() {
                   {plano.recursos.map((recurso, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                      <span className="text-sm text-muted-foreground">{recurso}</span>
+                      <span className="text-sm text-muted-foreground">
+                        {recurso}
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -255,13 +262,19 @@ export function Pricing() {
                 Plano <span className="text-gradient">Customizado</span>
               </h3>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                Implementação dedicada para sua empresa com customização total de acordo com as necessidades do seu escritório
+                Implementação dedicada para sua empresa com customização total
+                de acordo com as necessidades do seu escritório. ideal para
+                escritórios que precisam de um sistema totalmente personalizado
+                e com mais usuários e integrações com outros sistemas que não se
+                encaixa nos planos disponíveis.
               </p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <div className="space-y-4">
-                <h4 className="font-semibold text-lg mb-4">O que está incluído:</h4>
+                <h4 className="font-semibold text-lg mb-4">
+                  O que está incluído:
+                </h4>
                 <ul className="space-y-3">
                   <li className="flex items-start gap-3">
                     <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
@@ -301,7 +314,8 @@ export function Pricing() {
                   <li className="flex items-start gap-3">
                     <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                     <span className="text-sm text-muted-foreground">
-                      Customização de módulos conforme necessidades do escritório
+                      Customização de módulos conforme necessidades do
+                      escritório
                     </span>
                   </li>
                 </ul>

@@ -35,7 +35,7 @@ const faqs = [
   {
     question: "Como funciona o suporte?",
     answer:
-      "Todos os planos incluem suporte. O plano Básico tem suporte por email, o Profissional inclui suporte prioritário, e o Empresarial oferece suporte dedicado com atendimento personalizado e treinamentos.",
+      "Todos os planos incluem suporte. O plano Básico tem suporte por email, o Profissional inclui suporte prioritário, e o Empresarial oferece suporte dedicado.",
   },
   {
     question: "Posso migrar meus dados de outro sistema?",

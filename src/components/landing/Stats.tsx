@@ -11,7 +11,13 @@ interface CounterProps {
   prefix?: string;
 }
 
-function Counter({ from, to, duration = 2, suffix = "", prefix = "" }: CounterProps) {
+function Counter({
+  from,
+  to,
+  duration = 2,
+  suffix = "",
+  prefix = "",
+}: CounterProps) {
   const [count, setCount] = useState(from);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
@@ -28,35 +34,37 @@ function Counter({ from, to, duration = 2, suffix = "", prefix = "" }: CounterPr
 
   return (
     <span ref={ref}>
-      {prefix}{count.toLocaleString('pt-BR')}{suffix}
+      {prefix}
+      {count.toLocaleString("pt-BR")}
+      {suffix}
     </span>
   );
 }
 
 const stats = [
   {
-    value: 50000,
+    value: 8,
     suffix: "+",
-    label: "Petições Geradas",
-    description: "Com nossa IA especializada",
+    label: "Módulos Integrados",
+    description: "Sistema completo para escritórios",
   },
   {
-    value: 500,
-    suffix: "+",
-    label: "Escritórios Ativos",
-    description: "Em todo o Brasil",
+    value: 300,
+    suffix: "k +",
+    label: "IA Integrada",
+    description: "Mais de 300.000k de tokens de IA disponíveis",
   },
   {
-    value: 98,
+    value: 100,
     suffix: "%",
-    label: "Satisfação",
-    description: "Taxa de aprovação",
+    label: "LGPD Compliant",
+    description: "Segurança e privacidade garantidas",
   },
   {
-    value: 4,
-    suffix: "h",
-    label: "Economia/Dia",
-    description: "Por advogado em média",
+    value: 24,
+    suffix: "/7",
+    label: "Disponibilidade",
+    description: "Sistema sempre online e acessível",
   },
 ];
 

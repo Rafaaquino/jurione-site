@@ -17,13 +17,46 @@ export function Contact() {
   });
   const [loading, setLoading] = useState(false);
 
+  const formatPhone = (value: string): string => {
+    // Remove tudo que não é dígito
+    const numbers = value.replace(/\D/g, "");
+
+    // Aplica a máscara baseada no tamanho
+    if (numbers.length <= 2) {
+      return numbers;
+    } else if (numbers.length <= 6) {
+      return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`;
+    } else if (numbers.length <= 10) {
+      return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 6)}-${numbers.slice(
+        6
+      )}`;
+    } else {
+      // Celular com 11 dígitos
+      return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(
+        7,
+        11
+      )}`;
+    }
+  };
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    // Aplica máscara apenas para o campo telefone
+    if (name === "telefone") {
+      const formattedValue = formatPhone(value);
+      setFormData({
+        ...formData,
+        [name]: formattedValue,
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -79,8 +112,7 @@ export function Contact() {
               transition={{ delay: 0.1 }}
               className="font-display font-bold text-3xl md:text-4xl lg:text-5xl mb-6"
             >
-              Veja o JuriOne em{" "}
-              <span className="text-gradient">ação</span>
+              Veja o JuriOne em <span className="text-gradient">ação</span>
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -89,7 +121,8 @@ export function Contact() {
               transition={{ delay: 0.2 }}
               className="text-muted-foreground text-lg max-w-2xl mx-auto"
             >
-              Preencha o formulário abaixo e nossa equipe entrará em contato para agendar uma demonstração personalizada do sistema.
+              Preencha o formulário abaixo e nossa equipe entrará em contato
+              para agendar uma demonstração personalizada do sistema.
             </motion.p>
           </div>
 
@@ -106,7 +139,8 @@ export function Contact() {
                   Entre em contato
                 </h3>
                 <p className="text-muted-foreground mb-6">
-                  Nossa equipe está pronta para mostrar como o JuriOne pode transformar a gestão do seu escritório.
+                  Nossa equipe está pronta para mostrar como o JuriOne pode
+                  transformar a gestão do seu escritório.
                 </p>
               </div>
 
@@ -133,10 +167,10 @@ export function Contact() {
                   <div>
                     <p className="font-semibold mb-1">Telefone</p>
                     <a
-                      href="tel:+5511999999999"
+                      href="tel:+5511000000000"
                       className="text-muted-foreground hover:text-primary transition-colors"
                     >
-                      (11) 99999-9999
+                      (00) 00000-0000
                     </a>
                   </div>
                 </div>
@@ -152,7 +186,10 @@ export function Contact() {
               className="bg-card rounded-2xl border border-border p-6 md:p-8 space-y-4"
             >
               <div>
-                <label htmlFor="nome" className="block text-sm font-medium mb-2">
+                <label
+                  htmlFor="nome"
+                  className="block text-sm font-medium mb-2"
+                >
                   Nome completo *
                 </label>
                 <Input
@@ -167,7 +204,10 @@ export function Contact() {
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium mb-2">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium mb-2"
+                >
                   Email *
                 </label>
                 <Input
@@ -182,7 +222,10 @@ export function Contact() {
               </div>
 
               <div>
-                <label htmlFor="telefone" className="block text-sm font-medium mb-2">
+                <label
+                  htmlFor="telefone"
+                  className="block text-sm font-medium mb-2"
+                >
                   Telefone
                 </label>
                 <Input
@@ -191,12 +234,15 @@ export function Contact() {
                   type="tel"
                   value={formData.telefone}
                   onChange={handleChange}
-                  placeholder="(11) 99999-9999"
+                  placeholder="(00) 00000-0000"
                 />
               </div>
 
               <div>
-                <label htmlFor="escritorio" className="block text-sm font-medium mb-2">
+                <label
+                  htmlFor="escritorio"
+                  className="block text-sm font-medium mb-2"
+                >
                   Nome do Escritório
                 </label>
                 <Input
@@ -210,7 +256,10 @@ export function Contact() {
               </div>
 
               <div>
-                <label htmlFor="mensagem" className="block text-sm font-medium mb-2">
+                <label
+                  htmlFor="mensagem"
+                  className="block text-sm font-medium mb-2"
+                >
                   Mensagem
                 </label>
                 <Textarea
@@ -248,4 +297,3 @@ export function Contact() {
     </section>
   );
 }
-

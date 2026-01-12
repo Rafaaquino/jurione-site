@@ -5,7 +5,9 @@ import { Button } from "@/components/ui/button";
 import { redirectToTrial } from "@/lib/utils";
 
 const navItems = [
+  { label: "Início", href: "#hero" },
   { label: "Funcionalidades", href: "#funcionalidades" },
+  { label: "Para seu escritório", href: "#escritorio" },
   { label: "Planos", href: "#planos" },
   { label: "FAQ", href: "#faq" },
 ];
@@ -16,7 +18,7 @@ export function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
       <div className="container flex items-center justify-between h-16 md:h-20">
-        <a href="#" className="flex items-center gap-2">
+        <a href="/" className="flex items-center gap-2">
           <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg gradient-primary flex items-center justify-center">
             <span className="text-primary-foreground font-display font-bold text-lg md:text-xl">
               J

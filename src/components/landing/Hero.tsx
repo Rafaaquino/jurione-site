@@ -12,7 +12,10 @@ const scrollToContact = () => {
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-20 md:pt-24 pb-16 gradient-hero overflow-hidden">
+    <section
+      id="hero"
+      className="relative min-h-screen flex items-center justify-center pt-20 md:pt-24 pb-16 gradient-hero overflow-hidden"
+    >
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-64 md:w-96 h-64 md:h-96 bg-primary/5 rounded-full blur-3xl" />
