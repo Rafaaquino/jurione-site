@@ -51,14 +51,31 @@ try {
     execSync('git checkout --orphan gh-pages', { stdio: 'ignore' });
   }
 
-  // 5. Limpar tudo da branch gh-pages
+  // 5. Limpar tudo da branch gh-pages (exceto dist e node_modules)
   console.log('🧹 Limpando branch gh-pages...');
-  execSync('git rm -rf . || true', { stdio: 'ignore' });
   
-  // Remover todos os arquivos (incluindo .gitignore temporariamente)
+  // Lista de arquivos/pastas que NÃO devem ser deletados
+  const preservedItems = ['.git', 'dist', 'node_modules', '.gitignore'];
+  
+  // Remover todos os arquivos git-tracked (exceto os preservados)
+  try {
+    execSync('git ls-files', { encoding: 'utf-8' })
+      .split('\n')
+      .filter(file => file.trim())
+      .forEach(file => {
+        const shouldPreserve = preservedItems.some(item => file.startsWith(item));
+        if (!shouldPreserve) {
+          try {
+            execSync(`git rm -f "${file}"`, { stdio: 'ignore' });
+          } catch {}
+        }
+      });
+  } catch {}
+  
+  // Remover arquivos não rastreados (exceto os preservados)
   const files = fs.readdirSync(__dirname);
   for (const file of files) {
-    if (file !== '.git' && file !== 'dist' && file !== 'node_modules') {
+    if (!preservedItems.includes(file)) {
       const filePath = path.join(__dirname, file);
       try {
         if (fs.statSync(filePath).isDirectory()) {
