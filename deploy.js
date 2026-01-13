@@ -1,148 +1,92 @@
-import { execSync } from 'child_process';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { execSync } from "child_process";
+import fs from "fs";
+import os from "os";
+import path from "path";
+import { fileURLToPath } from "url";
+import ghpages from "gh-pages";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const distPath = path.join(__dirname, "dist");
 
-const distPath = path.join(__dirname, 'dist');
-const tempBranch = 'gh-pages-temp';
+const run = (command) => execSync(command, { stdio: "inherit" });
 
-console.log('🚀 Iniciando deploy para GitHub Pages...\n');
+const hasFiles = (dir) => fs.existsSync(dir) && fs.readdirSync(dir).length > 0;
+
+const cleanDist = () => {
+  if (fs.existsSync(distPath)) {
+    fs.rmSync(distPath, { recursive: true, force: true });
+  }
+};
+
+const ensureGhPagesBranch = () => {
+  let branchExists = true;
+  try {
+    execSync("git ls-remote --exit-code origin gh-pages", {
+      stdio: "ignore",
+    });
+  } catch {
+    branchExists = false;
+    console.log("ℹ️  Branch gh-pages não encontrada no remoto. Será criada.");
+
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "gh-pages-init-"));
+    console.log(`🛠️  Criando branch gh-pages em worktree temporária: ${tmp}`);
+
+    // Cria worktree destacada e inicializa commit vazio
+    execSync(`git worktree add "${tmp}" -b gh-pages`, { stdio: "inherit" });
+    fs.writeFileSync(path.join(tmp, ".nojekyll"), "");
+
+    execSync(`git -C "${tmp}" add .nojekyll`, { stdio: "inherit" });
+    execSync(`git -C "${tmp}" commit -m "chore: init gh-pages branch"`, {
+      stdio: "inherit",
+    });
+    execSync(`git -C "${tmp}" push -u origin gh-pages`, {
+      stdio: "inherit",
+    });
+    execSync(`git worktree remove "${tmp}" --force`, { stdio: "inherit" });
+  }
+
+  return branchExists;
+};
+
+console.log("🚀 Build + deploy para gh-pages (somente dist)\n");
 
 try {
-  // 1. Verificar se existe build
-  if (!fs.existsSync(distPath)) {
-    console.log('📦 Fazendo build...');
-    execSync('npm run build', { stdio: 'inherit' });
+  ensureGhPagesBranch();
+
+  console.log("📦 Gerando build limpo...");
+  cleanDist();
+  run("npm run build");
+
+  if (!hasFiles(distPath)) {
+    throw new Error("Pasta dist não foi gerada ou está vazia.");
   }
 
-  // Verificar novamente após build
-  if (!fs.existsSync(distPath) || fs.readdirSync(distPath).length === 0) {
-    throw new Error('❌ Pasta dist está vazia ou não foi criada!');
-  }
+  // Garante suporte a caminhos aninhados (sem _site do Jekyll)
+  fs.writeFileSync(path.join(distPath, ".nojekyll"), "");
 
-  console.log('✅ Build encontrado\n');
-
-  // 2. Salvar branch atual
-  const currentBranch = execSync('git branch --show-current', { encoding: 'utf-8' }).trim();
-  console.log(`📍 Branch atual: ${currentBranch}\n`);
-
-  // 3. Verificar se há mudanças não commitadas
-  const status = execSync('git status --porcelain', { encoding: 'utf-8' });
-  if (status) {
-    console.log('⚠️  Você tem mudanças não commitadas. Faça commit antes de fazer deploy.\n');
-    console.log(status);
-    process.exit(1);
-  }
-
-  // 4. Criar/atualizar branch gh-pages
-  console.log('🔄 Preparando branch gh-pages...');
-  
-  try {
-    // Tentar fazer checkout da branch gh-pages existente
-    execSync('git fetch origin gh-pages:gh-pages', { stdio: 'ignore' });
-    execSync('git checkout gh-pages', { stdio: 'ignore' });
-    console.log('✅ Branch gh-pages encontrada');
-  } catch {
-    // Se não existir, criar nova
-    console.log('📝 Criando nova branch gh-pages...');
-    execSync('git checkout --orphan gh-pages', { stdio: 'ignore' });
-  }
-
-  // 5. Limpar tudo da branch gh-pages (exceto dist e node_modules)
-  console.log('🧹 Limpando branch gh-pages...');
-  
-  // Lista de arquivos/pastas que NÃO devem ser deletados
-  const preservedItems = ['.git', 'dist', 'node_modules', '.gitignore'];
-  
-  // Remover todos os arquivos git-tracked (exceto os preservados)
-  try {
-    execSync('git ls-files', { encoding: 'utf-8' })
-      .split('\n')
-      .filter(file => file.trim())
-      .forEach(file => {
-        const shouldPreserve = preservedItems.some(item => file.startsWith(item));
-        if (!shouldPreserve) {
-          try {
-            execSync(`git rm -f "${file}"`, { stdio: 'ignore' });
-          } catch {}
-        }
-      });
-  } catch {}
-  
-  // Remover arquivos não rastreados (exceto os preservados)
-  const files = fs.readdirSync(__dirname);
-  for (const file of files) {
-    if (!preservedItems.includes(file)) {
-      const filePath = path.join(__dirname, file);
-      try {
-        if (fs.statSync(filePath).isDirectory()) {
-          fs.rmSync(filePath, { recursive: true, force: true });
-        } else {
-          fs.unlinkSync(filePath);
-        }
-      } catch (err) {
-        // Ignorar erros de arquivos que não podem ser deletados
+  console.log("🌐 Publicando em gh-pages sem trocar de branch local...");
+  ghpages.publish(
+    distPath,
+    {
+      branch: "gh-pages",
+      dotfiles: true,
+      message: "Deploy para GitHub Pages (dist apenas)",
+      history: false,
+    },
+    (err) => {
+      if (err) {
+        console.error("\n❌ Falha ao publicar:", err.message);
+        process.exit(1);
       }
+
+      console.log(
+        "✅ Deploy concluído. Conteúdo enviado apenas da pasta dist."
+      );
+      console.log("🔗 Site: https://rafaaquino.github.io/jurione-site/");
     }
-  }
-
-  // 6. Copiar arquivos do dist para a raiz
-  console.log('📋 Copiando arquivos do build...');
-  const distFiles = fs.readdirSync(distPath);
-  
-  for (const file of distFiles) {
-    const srcPath = path.join(distPath, file);
-    const destPath = path.join(__dirname, file);
-    
-    if (fs.statSync(srcPath).isDirectory()) {
-      fs.cpSync(srcPath, destPath, { recursive: true });
-    } else {
-      fs.copyFileSync(srcPath, destPath);
-    }
-  }
-
-  // 7. Criar .nojekyll
-  fs.writeFileSync(path.join(__dirname, '.nojekyll'), '');
-  console.log('✅ Arquivo .nojekyll criado');
-
-  // 8. Adicionar tudo e fazer commit
-  console.log('💾 Fazendo commit...');
-  execSync('git add -A', { stdio: 'inherit' });
-  
-  try {
-    execSync('git commit -m "Deploy to GitHub Pages"', { stdio: 'inherit' });
-    console.log('✅ Commit realizado');
-  } catch (err) {
-    console.log('ℹ️  Nenhuma mudança para commitar');
-  }
-
-  // 9. Fazer push
-  console.log('🚀 Fazendo push para gh-pages...');
-  execSync('git push origin gh-pages --force', { stdio: 'inherit' });
-  console.log('✅ Push realizado com sucesso!');
-
-  // 10. Voltar para a branch original
-  console.log(`\n🔙 Voltando para branch ${currentBranch}...`);
-  execSync(`git checkout ${currentBranch}`, { stdio: 'ignore' });
-
-  console.log('\n✨ Deploy concluído com sucesso!');
-  console.log('\n📍 Seu site estará disponível em:');
-  console.log('   https://rafaaquino.github.io/jurione-site/');
-  console.log('\n⏱️  Aguarde alguns minutos para o GitHub processar o deploy.');
-
+  );
 } catch (error) {
-  console.error('\n❌ Erro durante o deploy:', error.message);
-  
-  // Tentar voltar para a branch original em caso de erro
-  try {
-    const currentBranch = execSync('git branch --show-current', { encoding: 'utf-8' }).trim();
-    if (currentBranch === 'gh-pages') {
-      execSync('git checkout main || git checkout master', { stdio: 'ignore' });
-    }
-  } catch {}
-  
+  console.error("\n❌ Erro durante o deploy:", error.message);
   process.exit(1);
 }
