@@ -8,7 +8,7 @@ import ghpages from "gh-pages";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const distPath = path.join(__dirname, "dist");
-const customDomain = "www.jurione.com.br";
+const customDomain = "jurione.com.br";
 
 const run = (command) => execSync(command, { stdio: "inherit" });
 

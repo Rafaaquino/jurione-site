@@ -9,7 +9,7 @@ import "./App.css";
 
 function App() {
   return (
-    <BrowserRouter basename="/jurione-site">
+    <BrowserRouter basename="/">
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/politica-privacidade" element={<PrivacyPolicy />} />
