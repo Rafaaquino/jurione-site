@@ -8,6 +8,7 @@ import ghpages from "gh-pages";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const distPath = path.join(__dirname, "dist");
+const customDomain = "www.jurione.com.br";
 
 const run = (command) => execSync(command, { stdio: "inherit" });
 
@@ -64,6 +65,7 @@ try {
 
   // Garante suporte a caminhos aninhados (sem _site do Jekyll)
   fs.writeFileSync(path.join(distPath, ".nojekyll"), "");
+  fs.writeFileSync(path.join(distPath, "CNAME"), `${customDomain}\n`);
 
   console.log("🌐 Publicando em gh-pages sem trocar de branch local...");
   ghpages.publish(
