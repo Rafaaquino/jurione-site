@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Check, Sparkles, ArrowRight, Loader2 } from "lucide-react";
+import { Check, Sparkles, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface Plano {
@@ -14,7 +13,7 @@ interface Plano {
   popular?: boolean;
 }
 
-const fallbackPlanos: Plano[] = [
+const planos: Plano[] = [
   {
     id: 1,
     nome: "Básico",
@@ -62,27 +61,6 @@ const fallbackPlanos: Plano[] = [
 ];
 
 export function Pricing() {
-  const [planos, setPlanos] = useState<Plano[]>(fallbackPlanos);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchPlanos() {
-      try {
-        const response = await fetch("http://localhost:3000/api/planos/public");
-        if (response.ok) {
-          const data = await response.json();
-          if (data && Array.isArray(data) && data.length > 0) {
-            setPlanos(data);
-          }
-        }
-      } catch (error) {
-        console.log("Usando planos fallback");
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchPlanos();
-  }, []);
 
   // URLs do sistema por ambiente
   const systemUrls = {
@@ -186,13 +164,8 @@ export function Pricing() {
           </motion.p>
         </div>
 
-        {loading ? (
-          <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
-            {planos.map((plano, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
+          {planos.map((plano, index) => (
               <motion.div
                 key={plano.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -259,8 +232,7 @@ export function Pricing() {
                 </Button>
               </motion.div>
             ))}
-          </div>
-        )}
+        </div>
 
         {/* Plano Customizado */}
         <motion.div
