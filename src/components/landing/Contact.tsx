@@ -174,12 +174,14 @@ export function Contact() {
                     <Phone className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <p className="font-semibold mb-1">Telefone</p>
+                    <p className="font-semibold mb-1">Whatsapp</p>
                     <a
-                      href="tel:+5511000000000"
+                      href="whatsapp://send?phone=5511978354494"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="text-muted-foreground hover:text-primary transition-colors"
                     >
-                      (00) 00000-0000
+                      (11) 978354494
                     </a>
                   </div>
                 </div>
