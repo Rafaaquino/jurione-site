@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { enviarContato } from "@/services/api";
 
 export function Contact() {
   const { toast } = useToast();
@@ -28,19 +29,19 @@ export function Contact() {
       return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`;
     } else if (numbers.length <= 10) {
       return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 6)}-${numbers.slice(
-        6
+        6,
       )}`;
     } else {
       // Celular com 11 dígitos
       return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(
         7,
-        11
+        11,
       )}`;
     }
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
 
@@ -64,27 +65,35 @@ export function Contact() {
     setLoading(true);
 
     try {
-      // Aqui você pode integrar com a API do backend
-      // Por enquanto, apenas simula o envio
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Enviar dados para a API
+      const response = await enviarContato(formData);
 
-      toast({
-        title: "Mensagem enviada!",
-        description: "Entraremos em contato em breve.",
-      });
+      if (response.success) {
+        toast({
+          title: "Mensagem enviada!",
+          description: response.message || "Entraremos em contato em breve.",
+        });
 
-      // Limpar formulário
-      setFormData({
-        nome: "",
-        email: "",
-        telefone: "",
-        escritorio: "",
-        mensagem: "",
-      });
+        // Limpar formulário
+        setFormData({
+          nome: "",
+          email: "",
+          telefone: "",
+          escritorio: "",
+          mensagem: "",
+        });
+      } else {
+        throw new Error(response.error || "Erro ao enviar mensagem");
+      }
     } catch (error) {
+      console.error("Erro ao enviar formulário:", error);
+
       toast({
         title: "Erro ao enviar",
-        description: "Tente novamente mais tarde.",
+        description:
+          error instanceof Error
+            ? error.message
+            : "Tente novamente mais tarde.",
         variant: "destructive",
       });
     } finally {
