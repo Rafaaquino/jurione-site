@@ -92,7 +92,7 @@ export function Footer() {
               ))}
             </ul>*/}
           </div>
-
+          {/*   
           <div>
             <h4 className="font-semibold mb-4">Empresa</h4>
             <ul className="space-y-3">
@@ -107,7 +107,7 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </div>*/}
 
           <div>
             <h4 className="font-semibold mb-4">Legal</h4>

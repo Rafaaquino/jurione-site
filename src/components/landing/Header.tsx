@@ -7,6 +7,7 @@ import { redirectToTrial } from "@/lib/utils";
 const navItems = [
   { label: "Início", href: "#hero" },
   { label: "Funcionalidades", href: "#funcionalidades" },
+  { label: "Demonstração", href: "#demonstracao" },
   { label: "Para seu escritório", href: "#escritorio" },
   { label: "Planos", href: "#planos" },
   { label: "FAQ", href: "#faq" },
