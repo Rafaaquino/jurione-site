@@ -19,7 +19,6 @@ const footerLinks = {
     { label: "Termos de Uso", href: "/termos-uso" },
     { label: "Política de Privacidade", href: "/politica-privacidade" },
     { label: "LGPD", href: "/lgpd" },
-    { label: "Segurança", href: "#" },
   ],
 };
 
