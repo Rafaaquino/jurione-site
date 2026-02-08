@@ -61,7 +61,6 @@ const planos: Plano[] = [
 ];
 
 export function Pricing() {
-
   // URLs do sistema por ambiente
   const systemUrls = {
     development: "http://localhost:4200",
@@ -124,7 +123,18 @@ export function Pricing() {
     const encodedPlan = encodeURIComponent(planValue);
     const source = encodeURIComponent("landing_pricing");
 
-    const signupUrl = `${systemUrl}/auth/signup?plan=${encodedPlan}&source=${source}&utm_source=landing_pricing&utm_campaign=${utmCampaign}`;
+    // CAPTURAR O PARÂMETRO REF DA URL ATUAL (para sistema de afiliados)
+    const urlParams = new URLSearchParams(window.location.search);
+    const affiliateRef = urlParams.get("ref");
+
+    // Construir URL base
+    let signupUrl = `${systemUrl}/auth/signup?plan=${encodedPlan}&source=${source}&utm_source=landing_pricing&utm_campaign=${utmCampaign}`;
+
+    // ADICIONAR REF SE EXISTIR
+    if (affiliateRef) {
+      signupUrl += `&ref=${encodeURIComponent(affiliateRef)}`;
+      console.log("🎯 Código de afiliado detectado:", affiliateRef);
+    }
 
     console.log("Abrindo em nova aba:", signupUrl);
     window.open(signupUrl, "_blank", "noopener,noreferrer");
@@ -166,72 +176,72 @@ export function Pricing() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
           {planos.map((plano, index) => (
-              <motion.div
-                key={plano.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className={`relative p-6 md:p-8 rounded-2xl border transition-all ${
+            <motion.div
+              key={plano.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className={`relative p-6 md:p-8 rounded-2xl border transition-all ${
+                plano.popular
+                  ? "border-primary shadow-elevated bg-card scale-105 z-10"
+                  : "border-border bg-card hover:border-primary/30"
+              }`}
+            >
+              {plano.popular && (
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full gradient-cta text-primary-foreground text-sm font-semibold flex items-center gap-1.5">
+                  <Sparkles className="w-4 h-4" />
+                  Mais Popular
+                </div>
+              )}
+
+              <div className="mb-6">
+                <h3 className="font-display font-bold text-xl mb-2">
+                  {plano.nome}
+                </h3>
+                <p className="text-muted-foreground text-sm">
+                  Até {plano.usuarios} usuário{plano.usuarios > 1 ? "s" : ""}
+                </p>
+              </div>
+
+              <div className="mb-6">
+                <div className="flex items-baseline gap-1">
+                  <span className="text-sm text-muted-foreground">R$</span>
+                  <span className="font-display font-extrabold text-4xl md:text-5xl">
+                    {plano.preco}
+                  </span>
+                  <span className="text-muted-foreground">
+                    /{plano.periodicidade}
+                  </span>
+                </div>
+              </div>
+
+              <ul className="space-y-3 mb-8">
+                {plano.recursos.map((recurso, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                    <span className="text-sm text-muted-foreground">
+                      {recurso}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              <Button
+                className={`w-full font-semibold ${
                   plano.popular
-                    ? "border-primary shadow-elevated bg-card scale-105 z-10"
-                    : "border-border bg-card hover:border-primary/30"
+                    ? "gradient-cta text-primary-foreground shadow-soft"
+                    : ""
                 }`}
+                variant={plano.popular ? "default" : "outline"}
+                size="lg"
+                onClick={() => redirectToSignup(plano.nome)}
               >
-                {plano.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full gradient-cta text-primary-foreground text-sm font-semibold flex items-center gap-1.5">
-                    <Sparkles className="w-4 h-4" />
-                    Mais Popular
-                  </div>
-                )}
-
-                <div className="mb-6">
-                  <h3 className="font-display font-bold text-xl mb-2">
-                    {plano.nome}
-                  </h3>
-                  <p className="text-muted-foreground text-sm">
-                    Até {plano.usuarios} usuário{plano.usuarios > 1 ? "s" : ""}
-                  </p>
-                </div>
-
-                <div className="mb-6">
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-sm text-muted-foreground">R$</span>
-                    <span className="font-display font-extrabold text-4xl md:text-5xl">
-                      {plano.preco}
-                    </span>
-                    <span className="text-muted-foreground">
-                      /{plano.periodicidade}
-                    </span>
-                  </div>
-                </div>
-
-                <ul className="space-y-3 mb-8">
-                  {plano.recursos.map((recurso, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                      <span className="text-sm text-muted-foreground">
-                        {recurso}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-
-                <Button
-                  className={`w-full font-semibold ${
-                    plano.popular
-                      ? "gradient-cta text-primary-foreground shadow-soft"
-                      : ""
-                  }`}
-                  variant={plano.popular ? "default" : "outline"}
-                  size="lg"
-                  onClick={() => redirectToSignup(plano.nome)}
-                >
-                  Escolher Plano
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </motion.div>
-            ))}
+                Escolher Plano
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </motion.div>
+          ))}
         </div>
 
         {/* Plano Customizado */}

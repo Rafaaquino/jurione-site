@@ -16,17 +16,17 @@ const systemUrls = {
 const getSystemUrl = (): string => {
   // Verifica o modo do Vite (development, production, etc.)
   const appMode = import.meta.env.MODE;
-  
+
   // Se estiver em modo production explícito, usa produção
   if (appMode === "production") {
     return systemUrls.production;
   }
-  
+
   // Se estiver em modo development explícito, usa localhost
   if (appMode === "development") {
     return systemUrls.development;
   }
-  
+
   // Fallback: detecta pelo hostname (comportamento original)
   const hostname = window.location.hostname;
 
@@ -42,6 +42,19 @@ const getSystemUrl = (): string => {
 // Redireciona para trial grátis
 export const redirectToTrial = () => {
   const systemUrl = getSystemUrl();
-  const signupUrl = `${systemUrl}/auth/signup?plan=trial&source=landing_page&utm_source=landing_page&utm_campaign=free_trial`;
+
+  // CAPTURAR O PARÂMETRO REF DA URL ATUAL (para sistema de afiliados)
+  const urlParams = new URLSearchParams(window.location.search);
+  const affiliateRef = urlParams.get("ref");
+
+  // Construir URL base
+  let signupUrl = `${systemUrl}/auth/signup?plan=trial&source=landing_page&utm_source=landing_page&utm_campaign=free_trial`;
+
+  // ADICIONAR REF SE EXISTIR
+  if (affiliateRef) {
+    signupUrl += `&ref=${encodeURIComponent(affiliateRef)}`;
+    console.log("🎯 Código de afiliado detectado (trial):", affiliateRef);
+  }
+
   window.open(signupUrl, "_blank", "noopener,noreferrer");
 };
