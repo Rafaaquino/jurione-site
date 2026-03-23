@@ -33,7 +33,7 @@ export function Hero() {
           >
             <Sparkles className="w-4 h-4" />
             <span className="text-sm font-medium">
-              IA especializada em Direito Brasileiro
+              IA Jurídica especializada em Direito Brasileiro
             </span>
           </motion.div>
 
@@ -44,8 +44,8 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-tight mb-6"
           >
-            Automatize seu Escritório com{" "}
-            <span className="text-gradient">Inteligência Artificial</span>
+            Sistema Jurídico com IA para{" "}
+            <span className="text-gradient">Advogados</span>
           </motion.h1>
 
           {/* Subheadline */}
@@ -55,12 +55,12 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 md:mb-10 px-4"
           >
-            Gere petições profissionais em minutos, gerencie processos, clientes
-            e finanças em uma única plataforma.{" "}
+            A única plataforma que une{" "}
             <strong className="text-foreground">
-              Sistema jurídico completo
+              geração de petições com IA
             </strong>{" "}
-            para escritórios de advocacia.
+            à gestão completa do escritório de advocacia — processos, clientes,
+            contratos e finanças em um só lugar.
           </motion.p>
 
           {/* CTA Buttons */}

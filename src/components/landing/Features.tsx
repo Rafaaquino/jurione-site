@@ -16,56 +16,56 @@ const features = [
     icon: Sparkles,
     title: "Petições com IA",
     description:
-      "Gere petições iniciais profissionais em minutos. IA especializada em direito brasileiro com citação automática de legislações.",
+      "Gere petições iniciais profissionais em minutos. IA especializada em direito brasileiro com pesquisa de jurisprudência e citação automática de legislações.",
     highlight: true,
   },
   {
     icon: Scale,
     title: "Gestão de Processos",
     description:
-      "Controle completo de todos os processos do escritório com timeline, documentos e prazos automatizados.",
+      "Controle completo de todos os processos do escritório com timeline, documentos e prazos. Nunca deixe uma movimentação passar despercebida.",
   },
   {
     icon: Users,
     title: "Gestão de Clientes",
     description:
-      "Base de clientes organizada com integração ViaCEP e Brasil API. PF e PJ com validação automática.",
+      "Cadastro completo de clientes PF e PJ com busca automática de CEP e CNPJ. Histórico de atendimentos e documentos sempre à mão.",
   },
   {
     icon: FileText,
     title: "Contratos Inteligentes",
     description:
-      "8 templates profissionais, geração com IA e análise automática de cláusulas de risco.",
+      "8 templates profissionais prontos para uso, geração com IA e análise automática de cláusulas de risco.",
   },
   {
     icon: Wallet,
     title: "Módulo Financeiro",
     description:
-      "Controle receitas, despesas e honorários. Relatórios detalhados e exportação para PDF/Excel.",
+      "Controle de honorários advocatícios, receitas e despesas. Relatórios financeiros detalhados exportáveis em PDF e Excel.",
   },
   {
     icon: BarChart3,
     title: "Relatórios Avançados",
     description:
-      "Dashboard com KPIs, gráficos de performance e produtividade da equipe em tempo real.",
+      "Dashboard com indicadores de produtividade, gráficos de desempenho da equipe e visão geral do escritório em tempo real.",
   },
   {
     icon: Calendar,
     title: "Calendário e Prazos",
     description:
-      "Nunca perca um prazo. Lembretes automáticos e visualização de agenda integrada.",
+      "Nunca perca um prazo processual. Lembretes automáticos e agenda integrada para toda a equipe do escritório.",
   },
   {
     icon: Bell,
     title: "Notificações Inteligentes",
     description:
-      "Alertas proativos sobre prazos, movimentações e eventos importantes do escritório.",
+      "Alertas proativos sobre prazos, movimentações processuais e eventos críticos do escritório de advocacia.",
   },
   {
     icon: Shield,
     title: "Segurança Total",
     description:
-      "Multi-tenancy com isolamento de dados, JWT, auditoria completa e LGPD compliant.",
+      "Dados do seu escritório isolados e protegidos com criptografia e auditoria completa de ações. 100% LGPD compliant.",
   },
 ];
 
@@ -118,7 +118,7 @@ export function Features() {
             transition={{ delay: 0.2 }}
             className="text-muted-foreground text-lg"
           >
-            Sistema jurídico completo para escritórios de advocacia. Integração total entre módulos para máxima produtividade.
+            Plataforma completa de gestão jurídica para advogados e escritórios de advocacia. IA, processos, clientes, contratos e finanças totalmente integrados.
           </motion.p>
         </div>
 

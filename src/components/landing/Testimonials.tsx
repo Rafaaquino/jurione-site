@@ -6,8 +6,8 @@ const testimonials = [
     name: "Dr. Ricardo Almeida",
     role: "Sócio Fundador",
     company: "Almeida & Associados",
-    image:
-      "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face",
+    initials: "RA",
+    color: "bg-blue-600",
     content:
       "O JuriOne revolucionou nosso escritório. A IA para petições economiza em média 4 horas por dia da nossa equipe.",
     rating: 5,
@@ -16,8 +16,8 @@ const testimonials = [
     name: "Dra. Carla Santos",
     role: "Advogada Trabalhista",
     company: "Santos Advocacia",
-    image:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=face",
+    initials: "CS",
+    color: "bg-emerald-600",
     content:
       "Finalmente um sistema que entende o dia a dia de um advogado. A gestão de prazos e a integração com financeiro são impecáveis.",
     rating: 5,
@@ -26,10 +26,10 @@ const testimonials = [
     name: "Dr. Fernando Costa",
     role: "Advogado Civil",
     company: "Costa & Barros",
-    image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+    initials: "FC",
+    color: "bg-violet-600",
     content:
-      "As petições geradas pela IA são de qualidade impressionante. Cita legislação atualizada e a estrutura é exatamente como eu faria manualmente.",
+      "As petições geradas pela IA são de qualidade impressionante. Cita jurisprudência atualizada e a estrutura é exatamente como eu faria manualmente.",
     rating: 5,
   },
 ];
@@ -63,8 +63,8 @@ export function Testimonials() {
             transition={{ delay: 0.2 }}
             className="text-muted-foreground text-lg"
           >
-            Mais de 500 escritórios já transformaram sua produtividade com o
-            JuriOne
+            Advogados e escritórios de advocacia que já automatizaram sua
+            gestão com o JuriOne
           </motion.p>
         </div>
 
@@ -91,11 +91,13 @@ export function Testimonials() {
               </p>
 
               <div className="flex items-center gap-4">
-                <img
-                  src={testimonial.image}
-                  alt={testimonial.name}
-                  className="w-12 h-12 rounded-full object-cover"
-                />
+                <div
+                  className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${testimonial.color}`}
+                >
+                  <span className="text-white font-bold text-sm">
+                    {testimonial.initials}
+                  </span>
+                </div>
                 <div>
                   <p className="font-semibold">{testimonial.name}</p>
                   <p className="text-sm text-muted-foreground">

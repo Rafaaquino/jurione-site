@@ -6,17 +6,17 @@ const benefits = [
   {
     icon: Clock,
     title: "Economia de Tempo",
-    description: "Petições que levavam horas agora ficam prontas em minutos",
+    description: "Petições iniciais que levavam horas ficam prontas em minutos, com estrutura completa e revisável",
   },
   {
     icon: FileText,
-    title: "Qualidade Profissional",
-    description: "Documentos com estrutura jurídica adequada e citação de legislações",
+    title: "Jurisprudência e Legislação",
+    description: "Citação automática de jurisprudência atualizada e legislação aplicável em cada peça gerada",
   },
   {
     icon: Zap,
-    title: "Múltiplas Áreas",
-    description: "Civil, Trabalhista, Consumidor, Família, Penal e muito mais",
+    title: "Múltiplas Áreas do Direito",
+    description: "Civil, Trabalhista, Consumidor, Família, Penal e muito mais — uma IA para toda a advocacia",
   },
 ];
 
@@ -55,8 +55,9 @@ export function AIHighlight() {
               transition={{ delay: 0.2 }}
               className="text-muted-foreground text-lg mb-8"
             >
-              Nossa inteligência artificial foi treinada especificamente para o ordenamento jurídico brasileiro. 
-              Gere petições iniciais completas, analise contratos e identifique riscos automaticamente.
+              Nossa inteligência artificial foi treinada especificamente para o ordenamento jurídico brasileiro.
+              Gere petições iniciais completas com jurisprudência atualizada, analise contratos e
+              identifique riscos automaticamente — tudo dentro do seu sistema de gestão.
             </motion.p>
 
             <div className="space-y-6 mb-10">

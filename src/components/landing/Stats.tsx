@@ -46,25 +46,25 @@ const stats = [
     value: 8,
     suffix: "+",
     label: "Módulos Integrados",
-    description: "Sistema completo para escritórios",
+    description: "Gestão completa do escritório de advocacia",
   },
   {
     value: 300,
-    suffix: "k +",
-    label: "IA Integrada",
-    description: "Mais de 300.000k de tokens de IA disponíveis",
+    suffix: "k+",
+    label: "Tokens de IA / mês",
+    description: "Geração de petições e documentos jurídicos com IA",
   },
   {
     value: 100,
     suffix: "%",
     label: "LGPD Compliant",
-    description: "Segurança e privacidade garantidas",
+    description: "Dados dos seus clientes protegidos e em conformidade",
   },
   {
     value: 24,
     suffix: "/7",
     label: "Disponibilidade",
-    description: "Sistema sempre online e acessível",
+    description: "Acesse seu escritório de qualquer lugar, a qualquer hora",
   },
 ];
 
