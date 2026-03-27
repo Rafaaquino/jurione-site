@@ -7,6 +7,7 @@ import { redirectToTrial } from "@/lib/utils";
 const navItems = [
   { label: "Início", href: "#hero" },
   { label: "Funcionalidades", href: "#funcionalidades" },
+  { label: "Apps", href: "#apps" },
   { label: "Demonstração", href: "#demonstracao" },
   { label: "Para seu escritório", href: "#escritorio" },
   { label: "Planos", href: "#planos" },
@@ -51,7 +52,7 @@ export function Header() {
               window.open(
                 "https://jurione.app.br/auth/login",
                 "_blank",
-                "noopener,noreferrer"
+                "noopener,noreferrer",
               )
             }
           >
@@ -108,7 +109,7 @@ export function Header() {
                     window.open(
                       "https://jurione.app.br/auth/login",
                       "_blank",
-                      "noopener,noreferrer"
+                      "noopener,noreferrer",
                     );
                   }}
                 >
