@@ -8,10 +8,12 @@ const __dirname = path.dirname(__filename);
 const distDir = path.resolve(__dirname, "..", "dist");
 const indexFile = path.join(distDir, "index.html");
 
+// Rotas conhecidas da SPA — cada uma recebe seu próprio index.html com canonical correto
 const fallbackRoutes = [
-  "politica-privacidade",
-  "termos-uso",
-  "lgpd",
+  { route: "politica-privacidade", canonical: "https://jurione.com.br/politica-privacidade" },
+  { route: "termos-uso",           canonical: "https://jurione.com.br/termos-uso" },
+  { route: "lgpd",                 canonical: "https://jurione.com.br/lgpd" },
+  { route: "afiliado",             canonical: "https://jurione.com.br/afiliado" },
 ];
 
 const ensureIndexExists = () => {
@@ -22,29 +24,32 @@ const ensureIndexExists = () => {
   }
 };
 
-const copyIndexTo = (targetPath) => {
+const copyIndexWithCanonical = (targetPath, canonical) => {
   fs.mkdirSync(path.dirname(targetPath), { recursive: true });
-  fs.copyFileSync(indexFile, targetPath);
+  let html = fs.readFileSync(indexFile, "utf-8");
+  // Substitui o canonical pela URL correta desta rota
+  html = html.replace(
+    /<link rel="canonical" href="[^"]*"\s*\/>/,
+    `<link rel="canonical" href="${canonical}" />`
+  );
+  fs.writeFileSync(targetPath, html, "utf-8");
 };
 
 const run = () => {
   ensureIndexExists();
 
-  // Cria um 404.html que devolve a mesma shell da SPA,
-  // evitando erro de deep link no GitHub Pages.
-  copyIndexTo(path.join(distDir, "404.html"));
+  // 404.html — fallback do GitHub Pages para rotas não mapeadas (ex: deep links desconhecidos)
+  // Sem canonical específico, usa a home como padrão (já definido no index.html original)
+  fs.copyFileSync(indexFile, path.join(distDir, "404.html"));
 
-  // Cria um index.html por rota conhecida para garantir HTTP 200.
-  fallbackRoutes.forEach((route) => {
+  // Cria um index.html por rota com canonical correto para HTTP 200 e SEO
+  fallbackRoutes.forEach(({ route, canonical }) => {
     const routeIndex = path.join(distDir, route, "index.html");
-    copyIndexTo(routeIndex);
+    copyIndexWithCanonical(routeIndex, canonical);
   });
 
   console.log(
-    `✔️  Rotas estáticas geradas para: ${[
-      "404",
-      ...fallbackRoutes,
-    ].join(", ")}`
+    `✔️  Rotas estáticas geradas para: ${["404", ...fallbackRoutes.map(r => r.route)].join(", ")}`
   );
 };
 
