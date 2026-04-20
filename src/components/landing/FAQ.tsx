@@ -30,7 +30,7 @@ const faqs = [
   {
     question: "Posso testar antes de assinar?",
     answer:
-      "Sim! Oferecemos 7 dias de trial grátis em todos os planos. Você pode testar todas as funcionalidades, incluindo a IA, sem precisar cadastrar cartão de crédito. Se gostar, basta escolher o plano ideal para seu escritório.",
+      "Sim! Oferecemos 14 dias de trial grátis em todos os planos. Você pode testar todas as funcionalidades, incluindo a IA, sem precisar cadastrar cartão de crédito. Se gostar, basta escolher o plano ideal para seu escritório.",
   },
   {
     question: "Como funciona o suporte?",

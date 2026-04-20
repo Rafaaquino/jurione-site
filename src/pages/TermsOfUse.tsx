@@ -73,7 +73,7 @@ const TermsOfUse = () => {
 
         <h3>4.2. Período de Teste Grátis</h3>
         <p>
-          Oferecemos um período de teste gratuito de 7 dias. Durante este
+          Oferecemos um período de teste gratuito de 14 dias. Durante este
           período:
         </p>
         <ul>

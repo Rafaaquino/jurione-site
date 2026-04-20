@@ -263,7 +263,7 @@ export function Pricing() {
             transition={{ delay: 0.2 }}
             className="text-muted-foreground text-lg"
           >
-            Todos os planos incluem 7 dias de trial grátis. Cancele quando
+            Todos os planos incluem 14 dias de trial grátis. Cancele quando
             quiser.
           </motion.p>
         </div>

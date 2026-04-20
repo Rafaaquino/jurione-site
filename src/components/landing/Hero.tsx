@@ -75,7 +75,7 @@ export function Hero() {
               className="w-full sm:w-auto gradient-cta text-primary-foreground font-semibold text-lg px-8 py-6 shadow-elevated hover:opacity-90 transition-all"
               onClick={redirectToTrial}
             >
-              Comece Grátis por 7 Dias
+              Comece Grátis por 14 Dias
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
             <Button

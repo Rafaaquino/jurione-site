@@ -56,7 +56,7 @@ export function CTA() {
                 className="w-full sm:w-auto bg-white text-primary hover:bg-white/90 font-semibold text-lg px-8 py-6"
                 onClick={redirectToTrial}
               >
-                Começar Trial de 7 Dias
+                Começar Trial de 14 Dias
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
               <Button

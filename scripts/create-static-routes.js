@@ -13,7 +13,7 @@ const fallbackRoutes = [
   { route: "politica-privacidade", canonical: "https://jurione.com.br/politica-privacidade" },
   { route: "termos-uso",           canonical: "https://jurione.com.br/termos-uso" },
   { route: "lgpd",                 canonical: "https://jurione.com.br/lgpd" },
-  { route: "afiliado",             canonical: "https://jurione.com.br/afiliado" },
+  // /afiliado é um redirect handler — não deve ter canonical próprio nem ser indexada
 ];
 
 const ensureIndexExists = () => {
