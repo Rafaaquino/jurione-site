@@ -5,10 +5,8 @@ import { Button } from "@/components/ui/button";
 import { redirectToTrial } from "@/lib/utils";
 
 const navItems = [
-  { label: "Início", href: "#hero" },
   { label: "Funcionalidades", href: "#funcionalidades" },
   { label: "Apps", href: "#apps" },
-  { label: "Demonstração", href: "#demonstracao" },
   { label: "Para seu escritório", href: "#escritorio" },
   { label: "Planos", href: "#planos" },
   { label: "FAQ", href: "#faq" },
@@ -40,7 +38,9 @@ export function Header() {
               key={item.href}
               href={item.href}
               className="text-muted-foreground hover:text-foreground transition-colors font-medium"
-              {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              {...(item.external
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {})}
             >
               {item.label}
             </a>
@@ -99,7 +99,9 @@ export function Header() {
                   href={item.href}
                   className="text-muted-foreground hover:text-foreground transition-colors font-medium py-2"
                   onClick={() => setIsMenuOpen(false)}
-                  {...(item.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  {...(item.external
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
                 >
                   {item.label}
                 </a>
