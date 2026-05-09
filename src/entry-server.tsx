@@ -3,6 +3,7 @@ import { renderToString } from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
 import { Routes, Route } from "react-router-dom";
 import Index from "@/pages/Index";
+import Campanha from "@/pages/Campanha";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import TermsOfUse from "@/pages/TermsOfUse";
 import LGPD from "@/pages/LGPD";
@@ -17,6 +18,7 @@ export function render(url: string): string {
     <StaticRouter location={url}>
       <Routes>
         <Route path="/" element={<Index />} />
+        <Route path="/campanha" element={<Campanha />} />
         <Route path="/politica-privacidade" element={<PrivacyPolicy />} />
         <Route path="/termos-uso" element={<TermsOfUse />} />
         <Route path="/lgpd" element={<LGPD />} />

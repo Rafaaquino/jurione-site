@@ -25,6 +25,11 @@ const routes = [
     canonical: "https://jurione.com.br/",
   },
   {
+    url: "/campanha",
+    outputDir: resolve(distDir, "campanha"),
+    canonical: "https://jurione.com.br/campanha",
+  },
+  {
     url: "/politica-privacidade",
     outputDir: resolve(distDir, "politica-privacidade"),
     canonical: "https://jurione.com.br/politica-privacidade",
