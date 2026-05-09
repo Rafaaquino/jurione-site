@@ -31,10 +31,12 @@ function CadastroModal({
   open,
   plan,
   onClose,
+  isMobile,
 }: {
   open: boolean;
   plan: PlanName;
   onClose: () => void;
+  isMobile?: boolean;
 }) {
   const [showPass, setShowPass] = useState(false);
   const [state, setState] = useState<"idle" | "loading" | "success" | "error">(
@@ -161,7 +163,7 @@ function CadastroModal({
           background: "#0D1120",
           border: "1px solid rgba(99,102,241,.28)",
           borderRadius: "22px",
-          padding: "44px",
+          padding: isMobile ? "24px 20px" : "44px",
           width: "100%",
           maxWidth: "480px",
           position: "relative",
@@ -680,6 +682,9 @@ export default function Campanha() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<PlanName>("trial");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" ? window.innerWidth < 640 : false,
+  );
 
   const openModal = (plan: PlanName = "trial") => {
     setSelectedPlan(plan);
@@ -705,6 +710,12 @@ export default function Campanha() {
       document.body.style.overflow = "";
     };
   }, [modalOpen]);
+
+  useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth < 640);
+    window.addEventListener("resize", handler);
+    return () => window.removeEventListener("resize", handler);
+  }, []);
 
   const faqs = [
     {
@@ -1012,7 +1023,7 @@ export default function Campanha() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
+            gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4, 1fr)",
             gap: "14px",
             marginBottom: "88px",
           }}
@@ -1076,11 +1087,11 @@ export default function Campanha() {
               background: "rgba(239,68,68,.05)",
               border: "1px solid rgba(239,68,68,.2)",
               borderRadius: "18px",
-              padding: "32px 36px",
+              padding: isMobile ? "20px 16px" : "32px 36px",
               marginBottom: "20px",
               display: "flex",
               alignItems: "flex-start",
-              gap: "28px",
+              gap: "16px",
             }}
           >
             <div style={{ fontSize: "48px", flexShrink: 0 }}>⚠️</div>
@@ -1114,7 +1125,7 @@ export default function Campanha() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "1fr 1fr",
+              gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
               gap: "20px",
             }}
           >
@@ -1244,7 +1255,7 @@ export default function Campanha() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
+              gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
               gap: "18px",
               marginTop: "52px",
             }}
@@ -1417,7 +1428,7 @@ export default function Campanha() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
+              gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
               gap: "20px",
               marginTop: "52px",
             }}
@@ -1503,7 +1514,7 @@ export default function Campanha() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
+              gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
               gap: "16px",
               marginTop: "48px",
             }}
@@ -1601,7 +1612,7 @@ export default function Campanha() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
+              gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
               gap: "20px",
               marginTop: "52px",
               alignItems: "start",
@@ -1746,7 +1757,7 @@ export default function Campanha() {
                 ...S.card,
                 borderColor: "rgba(99,102,241,.38)",
                 background: "rgba(99,102,241,.06)",
-                transform: "scale(1.03)",
+                transform: isMobile ? "none" : "scale(1.03)",
               }}
             >
               <div
@@ -2042,11 +2053,11 @@ export default function Campanha() {
               background: "rgba(34,197,94,.05)",
               border: "1px solid rgba(34,197,94,.18)",
               borderRadius: "20px",
-              padding: "42px",
+              padding: isMobile ? "28px 20px" : "42px",
               display: "flex",
               alignItems: "center",
-              gap: "36px",
-              flexWrap: "wrap",
+              gap: "24px",
+              flexWrap: "wrap" as const,
             }}
           >
             <div style={{ fontSize: "68px", flexShrink: 0 }}>🛡️</div>
@@ -2115,7 +2126,7 @@ export default function Campanha() {
               background: "rgba(99,102,241,.06)",
               border: "1px solid rgba(99,102,241,.22)",
               borderRadius: "24px",
-              padding: "64px 44px",
+              padding: isMobile ? "40px 20px" : "64px 44px",
               position: "relative",
               overflow: "hidden",
             }}
@@ -2272,6 +2283,7 @@ export default function Campanha() {
         open={modalOpen}
         plan={selectedPlan}
         onClose={() => setModalOpen(false)}
+        isMobile={isMobile}
       />
     </div>
   );
