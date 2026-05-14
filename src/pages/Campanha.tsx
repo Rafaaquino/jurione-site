@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { cadastroRapido } from "@/services/api";
 
-const APP_URL = import.meta.env.VITE_APP_URL || "https://jurione.app.br";
+const APP_URL = import.meta.env.VITE_API_SITE;
 
 type PlanName = "trial" | "basico" | "profissional" | "empresarial";
 
@@ -13,9 +13,20 @@ const PLAN_LABELS: Record<PlanName, string> = {
   empresarial: "Plano Empresarial — R$2.800/mês",
 };
 
-const gtmPush = (payload: Record<string, unknown>) => {
-  (window as any).dataLayer = (window as any).dataLayer || [];
-  (window as any).dataLayer.push(payload);
+const gtmPush = (
+  payload: { event: string; [key: string]: unknown },
+  callback?: () => void,
+) => {
+  window.dataLayer = window.dataLayer ?? [];
+  if (callback) {
+    window.dataLayer.push({
+      ...payload,
+      eventCallback: callback,
+      eventTimeout: 1500,
+    });
+  } else {
+    window.dataLayer.push(payload);
+  }
 };
 
 const GT: React.CSSProperties = {
@@ -44,7 +55,6 @@ function CadastroModal({
   );
   const [errorMsg, setErrorMsg] = useState("");
   const [countdown, setCountdown] = useState(3);
-  const [submittedEmail, setSubmittedEmail] = useState("");
   const [vals, setVals] = useState({
     nomeEscritorio: "",
     nomeCompleto: "",
@@ -60,13 +70,10 @@ function CadastroModal({
     const iv = setInterval(() => {
       c--;
       setCountdown(c);
-      if (c <= 0) {
-        clearInterval(iv);
-        window.location.href = `${APP_URL}/auth/login?email=${encodeURIComponent(submittedEmail)}&source=campanha`;
-      }
+      if (c <= 0) clearInterval(iv);
     }, 1000);
     return () => clearInterval(iv);
-  }, [state, submittedEmail]);
+  }, [state]);
 
   const reset = () => {
     setVals({ nomeEscritorio: "", nomeCompleto: "", email: "", senha: "" });
@@ -107,7 +114,6 @@ function CadastroModal({
     setErrorMsg("");
     setState("loading");
     const emailTrimmed = vals.email.trim().toLowerCase();
-    setSubmittedEmail(emailTrimmed);
     try {
       await cadastroRapido({
         nomeEscritorio: vals.nomeEscritorio.trim(),
@@ -116,7 +122,18 @@ function CadastroModal({
         senha: vals.senha,
         source: "campanha",
       });
-      gtmPush({ event: "trial_signup", plan_name: plan, source: "campanha" });
+      const redirectUrl = `${APP_URL}/auth/login?email=${encodeURIComponent(emailTrimmed)}&source=campanha`;
+      gtmPush(
+        {
+          event: "trial_signup",
+          plan_name: plan,
+          source: "campanha",
+          office_name: vals.nomeEscritorio.trim(),
+        },
+        () => {
+          window.location.href = redirectUrl;
+        },
+      );
       setState("success");
     } catch (err: any) {
       gtmPush({ event: "signup_error", error_msg: err?.message });
