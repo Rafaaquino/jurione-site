@@ -1,6 +1,7 @@
 # JuriOne Landing Page — Documentação de Funcionalidades
 
 > Documento de referência para LLMs. Descreve toda a estrutura, fluxos, conteúdo e comportamentos do site `jurione.com.br`.
+> **Atualizado em:** 2026-05-17 · **Versão:** 1.1
 
 ---
 
@@ -35,7 +36,7 @@ Site de marketing/landing page do **JuriOne** (`jurione.com.br`). É um site est
 | Rota | Componente | Finalidade |
 |------|-----------|-----------|
 | `/` | `Index.tsx` | Landing page principal — todas as seções de marketing |
-| `/campanha` | `Campanha.tsx` | Landing page focada em conversão para tráfego pago (Google Ads / Meta Ads) — sem Header/Footer da home, modal de cadastro rápido inline |
+| `/campanha` | `Campanha.tsx` | Landing page focada em conversão para tráfego pago (Google Ads / Meta Ads) — sem Header/Footer da home, modal de cadastro rápido inline. O endpoint `POST /api/auth/cadastro-rapido` (backend) foi implementado para suportar esta rota. |
 | `/afiliado` | `Afiliado.tsx` | Recebe `?ref=CODE`, valida, dispara GTM e redireciona para o registro |
 | `/politica-privacidade` | `PrivacyPolicy.tsx` | Política de privacidade completa |
 | `/termos-uso` | `TermsOfUse.tsx` | Termos de uso do serviço |

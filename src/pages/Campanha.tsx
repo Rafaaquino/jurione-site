@@ -1256,6 +1256,80 @@ export default function Campanha() {
         </div>
       </section>
 
+      {/* ── SCREENSHOT DO SISTEMA ────────────────────────────────── */}
+      <section style={{ padding: "72px 0 56px" }}>
+        <div style={S.con}>
+          <div style={{ textAlign: "center", marginBottom: "40px" }}>
+            <span style={S.slabel}>O Sistema</span>
+            <h2 style={{ ...S.stitle, marginBottom: "12px" }}>
+              Veja o JuriOne{" "}
+              <span style={GT}>por dentro</span>
+            </h2>
+            <p style={{ ...S.ssub, marginBottom: 0 }}>
+              Interface moderna, intuitiva e desenhada para a rotina do advogado brasileiro
+            </p>
+          </div>
+
+          <div
+            style={{
+              position: "relative",
+              borderRadius: "20px",
+              overflow: "hidden",
+              border: "1px solid rgba(99,102,241,.22)",
+              boxShadow: "0 32px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(99,102,241,.08)",
+            }}
+          >
+            {/* Browser chrome bar */}
+            <div
+              style={{
+                background: "rgba(15,20,40,.97)",
+                borderBottom: "1px solid rgba(99,102,241,.12)",
+                padding: "10px 16px",
+                display: "flex",
+                alignItems: "center",
+                gap: "12px",
+              }}
+            >
+              <div style={{ display: "flex", gap: "6px" }}>
+                {["#EF4444", "#F59E0B", "#22C55E"].map((c) => (
+                  <div
+                    key={c}
+                    style={{
+                      width: "11px",
+                      height: "11px",
+                      borderRadius: "50%",
+                      background: c,
+                      opacity: 0.8,
+                    }}
+                  />
+                ))}
+              </div>
+              <div
+                style={{
+                  flex: 1,
+                  background: "rgba(99,102,241,.07)",
+                  border: "1px solid rgba(99,102,241,.12)",
+                  borderRadius: "6px",
+                  padding: "4px 12px",
+                  fontSize: "11px",
+                  color: "#475569",
+                  textAlign: "center",
+                }}
+              >
+                app.jurione.com.br
+              </div>
+            </div>
+
+            <img
+              src="/tela-do-sistema.png"
+              alt="Tela do sistema JuriOne"
+              style={{ width: "100%", height: "auto", display: "block" }}
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* ── FUNCIONALIDADES ──────────────────────────────────────── */}
       <section style={S.sec}>
         <div style={S.con}>
@@ -1294,8 +1368,8 @@ export default function Campanha() {
               },
               {
                 icon: "🤖",
-                title: "IA Jurídica — Geração de Documentos",
-                desc: "Gere petições iniciais, contestações e recursos com IA treinada no direito brasileiro. Jurisprudência do STJ e STF integrada. Documentos editáveis em Word. 45 segundos, não 3 horas.",
+                title: "Chat com IA Jurídica Inteligente",
+                desc: "Converse com a IA em linguagem natural: consulte processos, clientes e contratos, gere petições e contestações, tire dúvidas jurídicas — tudo em um chat integrado ao seu escritório. 45 segundos, não 3 horas.",
                 tag: "IA especializada",
                 highlight: true,
               },
@@ -1427,6 +1501,327 @@ export default function Campanha() {
                 )}
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── AI CHAT ──────────────────────────────────────────────── */}
+      <section style={{ padding: "80px 0", background: "rgba(99,102,241,.03)" }}>
+        <div style={S.con}>
+          <span style={S.slabel}>Chat com IA</span>
+          <h2 style={S.stitle}>
+            Converse com seu escritório.
+            <br />
+            <span style={GT}>A IA responde em segundos.</span>
+          </h2>
+          <p style={S.ssub}>
+            Não é só geração de documentos. O assistente de IA do JuriOne entende
+            perguntas em linguagem natural sobre seus processos, clientes e
+            contratos — como falar com um sócio que conhece cada detalhe do escritório.
+          </p>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+              gap: "32px",
+              marginTop: "56px",
+              alignItems: "center",
+            }}
+          >
+            {/* Chat mock */}
+            <div
+              style={{
+                background: "rgba(15,23,42,.95)",
+                border: "1px solid rgba(99,102,241,.2)",
+                borderRadius: "20px",
+                overflow: "hidden",
+                boxShadow: "0 24px 64px rgba(0,0,0,.4)",
+              }}
+            >
+              {/* Header */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "12px",
+                  padding: "16px 20px",
+                  borderBottom: "1px solid rgba(99,102,241,.12)",
+                  background: "rgba(99,102,241,.06)",
+                }}
+              >
+                <div
+                  style={{
+                    width: "36px",
+                    height: "36px",
+                    borderRadius: "10px",
+                    background: "linear-gradient(135deg, #6366F1, #3B82F6)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "16px",
+                    flexShrink: 0,
+                  }}
+                >
+                  🤖
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: "14px", fontWeight: 700, color: "#E2E8F0" }}>JuriOne IA</div>
+                  <div style={{ fontSize: "11px", color: "#64748B" }}>Assistente Jurídico</div>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <div
+                    style={{
+                      width: "8px",
+                      height: "8px",
+                      borderRadius: "50%",
+                      background: "#22C55E",
+                      boxShadow: "0 0 6px #22C55E",
+                    }}
+                  />
+                  <span style={{ fontSize: "11px", color: "#64748B" }}>Online</span>
+                </div>
+              </div>
+
+              {/* Messages */}
+              <div style={{ padding: "20px", display: "flex", flexDirection: "column", gap: "14px" }}>
+                {/* User message 1 */}
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                  <div
+                    style={{
+                      background: "linear-gradient(135deg, #6366F1, #3B82F6)",
+                      borderRadius: "16px 16px 4px 16px",
+                      padding: "10px 16px",
+                      maxWidth: "80%",
+                      fontSize: "13px",
+                      color: "#fff",
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    Quais processos do cliente João Silva vencem essa semana?
+                  </div>
+                </div>
+                {/* AI reply 1 */}
+                <div style={{ display: "flex", gap: "10px", alignItems: "flex-start" }}>
+                  <div
+                    style={{
+                      width: "28px",
+                      height: "28px",
+                      borderRadius: "8px",
+                      background: "linear-gradient(135deg, #6366F1, #3B82F6)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "13px",
+                      flexShrink: 0,
+                    }}
+                  >
+                    🤖
+                  </div>
+                  <div
+                    style={{
+                      background: "rgba(99,102,241,.08)",
+                      border: "1px solid rgba(99,102,241,.15)",
+                      borderRadius: "4px 16px 16px 16px",
+                      padding: "10px 16px",
+                      maxWidth: "85%",
+                      fontSize: "13px",
+                      color: "#E2E8F0",
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    <div style={{ marginBottom: "8px" }}>
+                      Encontrei <strong style={{ color: "#A5B4FC" }}>2 processos ativos</strong> para João Silva com prazos esta semana:
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                      {[
+                        { num: "0012345-78.2024.5.02", tipo: "Trabalhista", prazo: "22/05 · 5 dias", color: "#F59E0B" },
+                        { num: "0098765-43.2023.8.26", tipo: "Cível", prazo: "24/05 · 7 dias", color: "#60A5FA" },
+                      ].map((p) => (
+                        <div
+                          key={p.num}
+                          style={{
+                            background: "rgba(15,23,42,.6)",
+                            borderRadius: "8px",
+                            padding: "8px 12px",
+                            fontSize: "12px",
+                            borderLeft: `3px solid ${p.color}`,
+                          }}
+                        >
+                          <div style={{ color: "#A5B4FC", fontWeight: 600 }}>{p.num}</div>
+                          <div style={{ color: "#64748B", marginTop: "2px" }}>{p.tipo} · Prazo: {p.prazo}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                {/* User message 2 */}
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                  <div
+                    style={{
+                      background: "linear-gradient(135deg, #6366F1, #3B82F6)",
+                      borderRadius: "16px 16px 4px 16px",
+                      padding: "10px 16px",
+                      maxWidth: "80%",
+                      fontSize: "13px",
+                      color: "#fff",
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    Gere a contestação do processo trabalhista
+                  </div>
+                </div>
+                {/* AI reply 2 */}
+                <div style={{ display: "flex", gap: "10px", alignItems: "flex-start" }}>
+                  <div
+                    style={{
+                      width: "28px",
+                      height: "28px",
+                      borderRadius: "8px",
+                      background: "linear-gradient(135deg, #6366F1, #3B82F6)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "13px",
+                      flexShrink: 0,
+                    }}
+                  >
+                    🤖
+                  </div>
+                  <div
+                    style={{
+                      background: "rgba(99,102,241,.08)",
+                      border: "1px solid rgba(99,102,241,.15)",
+                      borderRadius: "4px 16px 16px 16px",
+                      padding: "10px 16px",
+                      maxWidth: "85%",
+                      fontSize: "13px",
+                      color: "#E2E8F0",
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    ✨ <strong style={{ color: "#A5B4FC" }}>Contestação gerada!</strong> Estrutura completa com fundamentos do TST e CLT, jurisprudência aplicável e pedidos. Pronta para revisão e download em Word.
+                  </div>
+                </div>
+              </div>
+
+              {/* Input bar */}
+              <div
+                style={{
+                  padding: "16px 20px",
+                  borderTop: "1px solid rgba(99,102,241,.1)",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "12px",
+                    background: "rgba(99,102,241,.06)",
+                    border: "1px solid rgba(99,102,241,.15)",
+                    borderRadius: "12px",
+                    padding: "10px 16px",
+                  }}
+                >
+                  <span style={{ fontSize: "13px", color: "#475569", flex: 1 }}>
+                    Pergunte sobre processos, contratos, clientes...
+                  </span>
+                  <div
+                    style={{
+                      width: "28px",
+                      height: "28px",
+                      borderRadius: "8px",
+                      background: "linear-gradient(135deg, #6366F1, #3B82F6)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "14px",
+                      flexShrink: 0,
+                    }}
+                  >
+                    →
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Capabilities list */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+              {[
+                {
+                  icon: "🔍",
+                  title: "Consulte seus dados em linguagem natural",
+                  desc: "Pergunte sobre qualquer processo, cliente ou contrato sem precisar navegar por menus. A IA busca e organiza as informações para você.",
+                },
+                {
+                  icon: "📋",
+                  title: "Gere documentos direto no chat",
+                  desc: "Peça uma petição, contestação ou contrato e receba o documento completo em segundos — com jurisprudência e legislação aplicável.",
+                },
+                {
+                  icon: "⚖️",
+                  title: "Tire dúvidas jurídicas com contexto",
+                  desc: "Perguntas sobre legislação e procedimentos respondidas com base no seu caso específico e nos dados reais do seu escritório.",
+                },
+                {
+                  icon: "📊",
+                  title: "Relatórios e análises sob demanda",
+                  desc: "\"Quantos processos temos no STJ?\", \"Qual a taxa de êxito do mês?\", \"Processos com audiência esta semana?\" — resposta imediata.",
+                },
+              ].map((c) => (
+                <div
+                  key={c.title}
+                  style={{
+                    display: "flex",
+                    gap: "16px",
+                    alignItems: "flex-start",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "44px",
+                      height: "44px",
+                      borderRadius: "12px",
+                      background: "rgba(99,102,241,.1)",
+                      border: "1px solid rgba(99,102,241,.2)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "20px",
+                      flexShrink: 0,
+                    }}
+                  >
+                    {c.icon}
+                  </div>
+                  <div>
+                    <div
+                      style={{
+                        fontSize: "15px",
+                        fontWeight: 700,
+                        color: "#E2E8F0",
+                        marginBottom: "4px",
+                      }}
+                    >
+                      {c.title}
+                    </div>
+                    <div style={{ fontSize: "13px", color: "#94A3B8", lineHeight: 1.6 }}>
+                      {c.desc}
+                    </div>
+                  </div>
+                </div>
+              ))}
+
+              <button
+                onClick={() => openModal("trial")}
+                style={{
+                  ...S.btnPri,
+                  marginTop: "8px",
+                  fontSize: "15px",
+                }}
+              >
+                Testar o Chat com IA →
+              </button>
+            </div>
           </div>
         </div>
       </section>
