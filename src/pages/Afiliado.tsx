@@ -19,8 +19,6 @@ const Afiliado = () => {
     const ref = searchParams.get("ref");
 
     if (!ref) {
-      // Se não tem ref, redirecionar para home
-      console.warn("Afiliado: código ref não encontrado, redirecionando para home");
       navigate("/");
       return;
     }
@@ -28,7 +26,6 @@ const Afiliado = () => {
     // Validar formato do código (apenas alfanumérico)
     const isValidCode = /^[a-zA-Z0-9]+$/.test(ref);
     if (!isValidCode) {
-      console.warn("Afiliado: código ref inválido", { ref });
       navigate("/");
       return;
     }
@@ -42,14 +39,8 @@ const Afiliado = () => {
       });
     }
 
-    // Log para debug
-    console.log("Afiliado: redirecionando com código", {
-      ref,
-      targetUrl: `https://jurione.app.br/register?ref=${ref}`,
-    });
-
     // Redirecionar para o app mantendo o ref
-    const appUrl = process.env.VITE_APP_URL || "https://jurione.app.br";
+    const appUrl = import.meta.env.VITE_APP_URL || "https://jurione.app.br";
     const targetUrl = `${appUrl}/register?ref=${encodeURIComponent(ref)}`;
     
     // Usar replace para não adicionar ao histórico
