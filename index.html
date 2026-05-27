@@ -1,10 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Content Security Policy (A02 — Security Misconfiguration) -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://googleads.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https://api.jurione.app.br https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com; frame-src https://www.googletagmanager.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://api.jurione.app.br; object-src 'none';" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://googleads.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: blob:; connect-src 'self' https://api.jurione.app.br https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com; frame-src https://www.googletagmanager.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://api.jurione.app.br; object-src 'none';"
+    />
     <title>Software Jurídico com IA para Advogados | JuriOne</title>
     <meta
       name="description"
@@ -27,36 +30,40 @@
       property="og:description"
       content="Gere petições com IA, pesquise jurisprudência e gerencie seu escritório de advocacia em uma única plataforma. Trial grátis por 14 dias."
     />
-    <meta
-      property="og:image"
-      content="https://jurione.com.br/og-image.png"
-    />
+    <meta property="og:image" content="https://jurione.com.br/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="628" />
-    <meta property="og:image:alt" content="JuriOne — Software Jurídico com IA para Advogados" />
+    <meta
+      property="og:image:alt"
+      content="JuriOne — Software Jurídico com IA para Advogados"
+    />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:url" content="https://jurione.com.br/" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Software Jurídico com IA para Advogados | JuriOne" />
+    <meta
+      name="twitter:title"
+      content="Software Jurídico com IA para Advogados | JuriOne"
+    />
     <meta
       name="twitter:description"
       content="Gere petições com IA e gerencie seu escritório. Feito para o direito brasileiro. Trial grátis por 14 dias."
     />
-    <meta
-      name="twitter:image"
-      content="https://jurione.com.br/og-image.png"
-    />
-
+    <meta name="twitter:image" content="https://jurione.com.br/og-image.png" />
 
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18105291006"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=AW-18105291006"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-      gtag('config', 'AW-18105291006');
+      gtag("config", "AW-18105291006");
     </script>
 
     <!-- Google tag (gtag.js) -->
@@ -74,11 +81,18 @@
     </script>
 
     <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-KXTT7KZ8');</script>
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-KXTT7KZ8");
+    </script>
     <!-- End Google Tag Manager -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -140,7 +154,18 @@
           {
             "@type": "Offer",
             "name": "Plano Básico",
-            "price": "320",
+            "price": "180",
+            "priceCurrency": "BRL",
+            "url": "https://jurione.com.br/#planos",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "billingDuration": "P1M"
+            }
+          },
+          {
+            "@type": "Offer",
+            "name": "Plano Intermediário",
+            "price": "290",
             "priceCurrency": "BRL",
             "url": "https://jurione.com.br/#planos",
             "priceSpecification": {
@@ -151,7 +176,7 @@
           {
             "@type": "Offer",
             "name": "Plano Profissional",
-            "price": "990",
+            "price": "720",
             "priceCurrency": "BRL",
             "url": "https://jurione.com.br/#planos",
             "priceSpecification": {
@@ -261,8 +286,14 @@
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXTT7KZ8"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-KXTT7KZ8"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>

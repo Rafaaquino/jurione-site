@@ -1,15 +1,22 @@
 import { useState, useEffect } from "react";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { cadastroRapido } from "@/services/api";
+import { usePlanos, type FeatureStatus as CampFeatureStatus } from "@/hooks/use-planos";
 
 const APP_URL = import.meta.env.VITE_API_SITE;
 
-type PlanName = "trial" | "basico" | "profissional" | "empresarial";
+type PlanName =
+  | "trial"
+  | "basico"
+  | "intermediario"
+  | "profissional"
+  | "empresarial";
 
 const PLAN_LABELS: Record<PlanName, string> = {
   trial: "Trial Gratuito (14 dias)",
-  basico: "Plano Básico — R$320/mês",
-  profissional: "Plano Profissional — R$990/mês",
+  basico: "Plano Básico — R$180/mês",
+  intermediario: "Plano Intermediário — R$290/mês",
+  profissional: "Plano Profissional — R$720/mês",
   empresarial: "Plano Empresarial — R$2.800/mês",
 };
 
@@ -683,10 +690,12 @@ const S: Record<string, React.CSSProperties> = {
     background: "rgba(15,23,42,.9)",
     border: "1px solid rgba(99,102,241,.1)",
     borderRadius: "18px",
-    padding: "28px",
+    padding: "22px",
     transition: "all .2s",
     position: "relative",
     overflow: "hidden",
+    display: "flex",
+    flexDirection: "column" as const,
   },
   gline: {
     height: "3px",
@@ -695,6 +704,25 @@ const S: Record<string, React.CSSProperties> = {
   },
 };
 
+// ─── Pricing data ─────────────────────────────────────────────────────────────
+
+
+function CampStatusDot({ status }: { status: CampFeatureStatus }) {
+  const base: React.CSSProperties = {
+    width: "10px",
+    height: "10px",
+    borderRadius: "50%",
+    flexShrink: 0,
+    marginTop: "3px",
+    display: "inline-block",
+  };
+  if (status === "included")
+    return <span style={{ ...base, background: "#22C55E" }} />;
+  if (status === "limited")
+    return <span style={{ ...base, background: "#FBBF24" }} />;
+  return <span style={{ ...base, background: "rgba(148,163,184,.3)" }} />;
+}
+
 export default function Campanha() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<PlanName>("trial");
@@ -702,6 +730,7 @@ export default function Campanha() {
   const [isMobile, setIsMobile] = useState(
     typeof window !== "undefined" ? window.innerWidth < 640 : false,
   );
+  const { data: campanhaPlanos, isLoading: planosLoading } = usePlanos();
 
   const openModal = (plan: PlanName = "trial") => {
     setSelectedPlan(plan);
@@ -1026,9 +1055,9 @@ export default function Campanha() {
             fontWeight: 500,
           }}
         >
-          🔥 Condições especiais de lançamento:{" "}
+          🔥 Novos preços de lançamento:{" "}
           <strong style={{ color: "#F1F5F9" }}>
-            plano Básico por R$320/mês
+            plano Básico por R$180/mês · Intermediário por R$290/mês
           </strong>{" "}
           com acesso antecipado a todos os novos módulos. Somente para os
           primeiros assinantes.
@@ -1262,11 +1291,11 @@ export default function Campanha() {
           <div style={{ textAlign: "center", marginBottom: "40px" }}>
             <span style={S.slabel}>O Sistema</span>
             <h2 style={{ ...S.stitle, marginBottom: "12px" }}>
-              Veja o JuriOne{" "}
-              <span style={GT}>por dentro</span>
+              Veja o JuriOne <span style={GT}>por dentro</span>
             </h2>
             <p style={{ ...S.ssub, marginBottom: 0 }}>
-              Interface moderna, intuitiva e desenhada para a rotina do advogado brasileiro
+              Interface moderna, intuitiva e desenhada para a rotina do advogado
+              brasileiro
             </p>
           </div>
 
@@ -1276,7 +1305,8 @@ export default function Campanha() {
               borderRadius: "20px",
               overflow: "hidden",
               border: "1px solid rgba(99,102,241,.22)",
-              boxShadow: "0 32px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(99,102,241,.08)",
+              boxShadow:
+                "0 32px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(99,102,241,.08)",
             }}
           >
             {/* Browser chrome bar */}
@@ -1506,7 +1536,9 @@ export default function Campanha() {
       </section>
 
       {/* ── AI CHAT ──────────────────────────────────────────────── */}
-      <section style={{ padding: "80px 0", background: "rgba(99,102,241,.03)" }}>
+      <section
+        style={{ padding: "80px 0", background: "rgba(99,102,241,.03)" }}
+      >
         <div style={S.con}>
           <span style={S.slabel}>Chat com IA</span>
           <h2 style={S.stitle}>
@@ -1515,9 +1547,10 @@ export default function Campanha() {
             <span style={GT}>A IA responde em segundos.</span>
           </h2>
           <p style={S.ssub}>
-            Não é só geração de documentos. O assistente de IA do JuriOne entende
-            perguntas em linguagem natural sobre seus processos, clientes e
-            contratos — como falar com um sócio que conhece cada detalhe do escritório.
+            Não é só geração de documentos. O assistente de IA do JuriOne
+            entende perguntas em linguagem natural sobre seus processos,
+            clientes e contratos — como falar com um sócio que conhece cada
+            detalhe do escritório.
           </p>
 
           <div
@@ -1566,10 +1599,22 @@ export default function Campanha() {
                   🤖
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: "14px", fontWeight: 700, color: "#E2E8F0" }}>JuriOne IA</div>
-                  <div style={{ fontSize: "11px", color: "#64748B" }}>Assistente Jurídico</div>
+                  <div
+                    style={{
+                      fontSize: "14px",
+                      fontWeight: 700,
+                      color: "#E2E8F0",
+                    }}
+                  >
+                    JuriOne IA
+                  </div>
+                  <div style={{ fontSize: "11px", color: "#64748B" }}>
+                    Assistente Jurídico
+                  </div>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                <div
+                  style={{ display: "flex", alignItems: "center", gap: "6px" }}
+                >
                   <div
                     style={{
                       width: "8px",
@@ -1579,12 +1624,21 @@ export default function Campanha() {
                       boxShadow: "0 0 6px #22C55E",
                     }}
                   />
-                  <span style={{ fontSize: "11px", color: "#64748B" }}>Online</span>
+                  <span style={{ fontSize: "11px", color: "#64748B" }}>
+                    Online
+                  </span>
                 </div>
               </div>
 
               {/* Messages */}
-              <div style={{ padding: "20px", display: "flex", flexDirection: "column", gap: "14px" }}>
+              <div
+                style={{
+                  padding: "20px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "14px",
+                }}
+              >
                 {/* User message 1 */}
                 <div style={{ display: "flex", justifyContent: "flex-end" }}>
                   <div
@@ -1602,7 +1656,13 @@ export default function Campanha() {
                   </div>
                 </div>
                 {/* AI reply 1 */}
-                <div style={{ display: "flex", gap: "10px", alignItems: "flex-start" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "10px",
+                    alignItems: "flex-start",
+                  }}
+                >
                   <div
                     style={{
                       width: "28px",
@@ -1631,12 +1691,32 @@ export default function Campanha() {
                     }}
                   >
                     <div style={{ marginBottom: "8px" }}>
-                      Encontrei <strong style={{ color: "#A5B4FC" }}>2 processos ativos</strong> para João Silva com prazos esta semana:
+                      Encontrei{" "}
+                      <strong style={{ color: "#A5B4FC" }}>
+                        2 processos ativos
+                      </strong>{" "}
+                      para João Silva com prazos esta semana:
                     </div>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "6px",
+                      }}
+                    >
                       {[
-                        { num: "0012345-78.2024.5.02", tipo: "Trabalhista", prazo: "22/05 · 5 dias", color: "#F59E0B" },
-                        { num: "0098765-43.2023.8.26", tipo: "Cível", prazo: "24/05 · 7 dias", color: "#60A5FA" },
+                        {
+                          num: "0012345-78.2024.5.02",
+                          tipo: "Trabalhista",
+                          prazo: "22/05 · 5 dias",
+                          color: "#F59E0B",
+                        },
+                        {
+                          num: "0098765-43.2023.8.26",
+                          tipo: "Cível",
+                          prazo: "24/05 · 7 dias",
+                          color: "#60A5FA",
+                        },
                       ].map((p) => (
                         <div
                           key={p.num}
@@ -1648,8 +1728,12 @@ export default function Campanha() {
                             borderLeft: `3px solid ${p.color}`,
                           }}
                         >
-                          <div style={{ color: "#A5B4FC", fontWeight: 600 }}>{p.num}</div>
-                          <div style={{ color: "#64748B", marginTop: "2px" }}>{p.tipo} · Prazo: {p.prazo}</div>
+                          <div style={{ color: "#A5B4FC", fontWeight: 600 }}>
+                            {p.num}
+                          </div>
+                          <div style={{ color: "#64748B", marginTop: "2px" }}>
+                            {p.tipo} · Prazo: {p.prazo}
+                          </div>
                         </div>
                       ))}
                     </div>
@@ -1672,7 +1756,13 @@ export default function Campanha() {
                   </div>
                 </div>
                 {/* AI reply 2 */}
-                <div style={{ display: "flex", gap: "10px", alignItems: "flex-start" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "10px",
+                    alignItems: "flex-start",
+                  }}
+                >
                   <div
                     style={{
                       width: "28px",
@@ -1700,7 +1790,13 @@ export default function Campanha() {
                       lineHeight: 1.6,
                     }}
                   >
-                    ✨ <strong style={{ color: "#A5B4FC" }}>Contestação gerada!</strong> Estrutura completa com fundamentos do TST e CLT, jurisprudência aplicável e pedidos. Pronta para revisão e download em Word.
+                    ✨{" "}
+                    <strong style={{ color: "#A5B4FC" }}>
+                      Contestação gerada!
+                    </strong>{" "}
+                    Estrutura completa com fundamentos do TST e CLT,
+                    jurisprudência aplicável e pedidos. Pronta para revisão e
+                    download em Word.
                   </div>
                 </div>
               </div>
@@ -1746,7 +1842,9 @@ export default function Campanha() {
             </div>
 
             {/* Capabilities list */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "20px" }}
+            >
               {[
                 {
                   icon: "🔍",
@@ -1766,7 +1864,7 @@ export default function Campanha() {
                 {
                   icon: "📊",
                   title: "Relatórios e análises sob demanda",
-                  desc: "\"Quantos processos temos no STJ?\", \"Qual a taxa de êxito do mês?\", \"Processos com audiência esta semana?\" — resposta imediata.",
+                  desc: '"Quantos processos temos no STJ?", "Qual a taxa de êxito do mês?", "Processos com audiência esta semana?" — resposta imediata.',
                 },
               ].map((c) => (
                 <div
@@ -1804,7 +1902,13 @@ export default function Campanha() {
                     >
                       {c.title}
                     </div>
-                    <div style={{ fontSize: "13px", color: "#94A3B8", lineHeight: 1.6 }}>
+                    <div
+                      style={{
+                        fontSize: "13px",
+                        color: "#94A3B8",
+                        lineHeight: 1.6,
+                      }}
+                    >
                       {c.desc}
                     </div>
                   </div>
@@ -2024,435 +2128,299 @@ export default function Campanha() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
-              gap: "20px",
+              gridTemplateColumns: isMobile ? "1fr" : "repeat(4, 1fr)",
+              gap: "16px",
               marginTop: "52px",
-              alignItems: "start",
+              alignItems: "stretch",
             }}
           >
-            {/* Básico */}
-            <div style={S.card}>
+            {planosLoading && (
+              <div style={{ gridColumn: "1/-1", display: "flex", justifyContent: "center", padding: "40px" }}>
+                <Loader2 style={{ width: "32px", height: "32px", animation: "spin 1s linear infinite", color: "#6366F1" }} />
+              </div>
+            )}
+            {!planosLoading && (campanhaPlanos ?? []).map((plano) => (
               <div
+                key={plano.id}
                 style={{
-                  fontSize: "12px",
-                  fontWeight: 700,
-                  letterSpacing: "1.5px",
-                  textTransform: "uppercase",
-                  color: "#A5B4FC",
-                  marginBottom: "4px",
+                  ...S.card,
+                  ...(plano.popular
+                    ? {
+                        borderColor: "rgba(99,102,241,.4)",
+                        background: "rgba(99,102,241,.06)",
+                      }
+                    : {}),
                 }}
               >
-                Básico
-              </div>
-              <div
-                style={{
-                  fontSize: "13px",
-                  color: "#64748B",
-                  marginBottom: "22px",
-                }}
-              >
-                Advogado solo iniciante
-              </div>
-              <div style={{ marginBottom: "6px" }}>
-                <span
-                  style={{
-                    fontSize: "18px",
-                    fontWeight: 700,
-                    color: "#94A3B8",
-                    verticalAlign: "top",
-                    marginTop: "10px",
-                    display: "inline-block",
-                  }}
-                >
-                  R$
-                </span>
-                <span
-                  style={{
-                    fontSize: "52px",
-                    fontWeight: 900,
-                    letterSpacing: "-2px",
-                    lineHeight: 1,
-                  }}
-                >
-                  320
-                </span>
-                <span style={{ fontSize: "14px", color: "#94A3B8" }}>/mês</span>
-              </div>
-              <div
-                style={{
-                  fontSize: "13px",
-                  color: "#22C55E",
-                  marginBottom: "22px",
-                  fontWeight: 500,
-                }}
-              >
-                ✓ 14 dias grátis para começar
-              </div>
-              <div
-                style={{
-                  height: "1px",
-                  background: "rgba(99,102,241,.1)",
-                  marginBottom: "22px",
-                }}
-              />
-              <ul style={{ listStyle: "none", marginBottom: "30px" }}>
-                {[
-                  "Gestão de processos com histórico",
-                  "Alertas de prazo automáticos",
-                  "Gestão de clientes e contratos",
-                  "Análise de contratos com IA",
-                  "Calculadoras jurídicas",
-                  "IA para documentos (380k tokens/mês)",
-                  "Relatórios (limitado)",
-                  "1 usuário · Suporte por e-mail",
-                ].map((f) => (
-                  <li
-                    key={f}
-                    style={{
-                      display: "flex",
-                      alignItems: "flex-start",
-                      gap: "10px",
-                      fontSize: "14px",
-                      color: "#E2E8F0",
-                      padding: "7px 0",
-                      borderBottom: "1px solid rgba(255,255,255,.04)",
-                    }}
-                  >
-                    <span
+                {/* Header */}
+                <div style={{ marginBottom: "20px" }}>
+                  {plano.popular && (
+                    <div
                       style={{
-                        color: "#22C55E",
-                        flexShrink: 0,
-                        marginTop: "2px",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        background: "linear-gradient(135deg, #6366F1, #3B82F6)",
+                        color: "#fff",
+                        fontSize: "11px",
+                        fontWeight: 700,
+                        padding: "4px 12px",
+                        borderRadius: "20px",
+                        marginBottom: "8px",
+                        whiteSpace: "nowrap" as const,
                       }}
                     >
-                      ✓
-                    </span>
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <button
-                onClick={() => openModal("basico")}
-                style={{
-                  display: "block",
-                  width: "100%",
-                  textAlign: "center",
-                  fontWeight: 700,
-                  fontSize: "15px",
-                  padding: "15px",
-                  borderRadius: "12px",
-                  cursor: "pointer",
-                  background: "transparent",
-                  color: "#E2E8F0",
-                  border: "1px solid rgba(99,102,241,.22)",
-                  fontFamily: "'Inter', sans-serif",
-                  transition: "all .2s",
-                }}
-              >
-                Começar Trial Grátis →
-              </button>
-              <p
-                style={{
-                  fontSize: "12px",
-                  color: "#64748B",
-                  textAlign: "center",
-                  marginTop: "12px",
-                }}
-              >
-                R$320/mês após o trial · Sem fidelidade
-              </p>
-            </div>
+                      ⚡ Mais popular
+                    </div>
+                  )}
+                  {plano.destaque && (
+                    <div
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        background: "rgba(99,102,241,.12)",
+                        border: "1px solid rgba(99,102,241,.25)",
+                        color: "#A5B4FC",
+                        fontSize: "11px",
+                        fontWeight: 700,
+                        padding: "4px 12px",
+                        borderRadius: "20px",
+                        marginBottom: "8px",
+                        whiteSpace: "nowrap" as const,
+                      }}
+                    >
+                      Poder total
+                    </div>
+                  )}
+                  <h3
+                    style={{
+                      fontSize: "20px",
+                      fontWeight: 800,
+                      color: "#E2E8F0",
+                      marginBottom: "4px",
+                    }}
+                  >
+                    {plano.display_name}
+                  </h3>
+                  <p style={{ fontSize: "13px", color: "#64748B" }}>
+                    {plano.subtitulo}
+                  </p>
+                </div>
 
-            {/* Profissional — destaque */}
-            <div
-              style={{
-                ...S.card,
-                borderColor: "rgba(99,102,241,.38)",
-                background: "rgba(99,102,241,.06)",
-                transform: isMobile ? "none" : "scale(1.03)",
-              }}
-            >
-              <div
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  background: "linear-gradient(135deg, #6366F1, #3B82F6)",
-                  color: "#fff",
-                  fontSize: "11px",
-                  fontWeight: 700,
-                  letterSpacing: "1px",
-                  textTransform: "uppercase",
-                  padding: "5px 22px",
-                  borderRadius: "0 0 12px 12px",
-                }}
-              >
-                ⚡ Mais Popular
-              </div>
-              <div
-                style={{
-                  fontSize: "12px",
-                  fontWeight: 700,
-                  letterSpacing: "1.5px",
-                  textTransform: "uppercase",
-                  color: "#A5B4FC",
-                  marginBottom: "4px",
-                  marginTop: "18px",
-                }}
-              >
-                Profissional
-              </div>
-              <div
-                style={{
-                  fontSize: "13px",
-                  color: "#64748B",
-                  marginBottom: "22px",
-                }}
-              >
-                Pequenos escritórios
-              </div>
-              <div style={{ marginBottom: "6px" }}>
-                <span
-                  style={{
-                    fontSize: "18px",
-                    fontWeight: 700,
-                    color: "#94A3B8",
-                    verticalAlign: "top",
-                    marginTop: "10px",
-                    display: "inline-block",
-                  }}
-                >
-                  R$
-                </span>
-                <span
-                  style={{
-                    fontSize: "52px",
-                    fontWeight: 900,
-                    letterSpacing: "-2px",
-                    lineHeight: 1,
-                  }}
-                >
-                  990
-                </span>
-                <span style={{ fontSize: "14px", color: "#94A3B8" }}>/mês</span>
-              </div>
-              <div
-                style={{
-                  fontSize: "13px",
-                  color: "#22C55E",
-                  marginBottom: "22px",
-                  fontWeight: 500,
-                }}
-              >
-                ✓ 14 dias grátis para começar
-              </div>
-              <div
-                style={{
-                  height: "1px",
-                  background: "rgba(99,102,241,.1)",
-                  marginBottom: "22px",
-                }}
-              />
-              <ul style={{ listStyle: "none", marginBottom: "30px" }}>
-                {[
-                  "Tudo do plano Básico",
-                  "IA para documentos (1.28M tokens/mês)",
-                  "Módulo financeiro completo",
-                  "Relatórios avançados",
-                  "Lista de tarefas e timesheet",
-                  "Agenda de audiências integrada",
-                  "Acesso antecipado a novos módulos",
-                  "5 usuários · Suporte prioritário",
-                ].map((f) => (
-                  <li
-                    key={f}
+                {/* Price */}
+                <div style={{ marginBottom: "16px" }}>
+                  <div
                     style={{
                       display: "flex",
-                      alignItems: "flex-start",
-                      gap: "10px",
-                      fontSize: "14px",
-                      color: "#E2E8F0",
-                      padding: "7px 0",
-                      borderBottom: "1px solid rgba(255,255,255,.04)",
+                      alignItems: "baseline",
+                      gap: "4px",
                     }}
                   >
+                    <span style={{ fontSize: "12px", color: "#94A3B8" }}>
+                      R$
+                    </span>
                     <span
                       style={{
-                        color: "#22C55E",
-                        flexShrink: 0,
-                        marginTop: "2px",
+                        fontSize: "30px",
+                        fontWeight: 900,
+                        letterSpacing: "-1px",
+                        color: "#F1F5F9",
+                        lineHeight: 1,
                       }}
                     >
-                      ✓
+                      {(plano.preco / 100).toLocaleString("pt-BR")}
                     </span>
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <button
-                onClick={() => openModal("profissional")}
-                style={{
-                  display: "block",
-                  width: "100%",
-                  textAlign: "center",
-                  fontWeight: 700,
-                  fontSize: "15px",
-                  padding: "15px",
-                  borderRadius: "12px",
-                  cursor: "pointer",
-                  background: "linear-gradient(135deg, #6366F1, #3B82F6)",
-                  color: "#fff",
-                  border: "none",
-                  fontFamily: "'Inter', sans-serif",
-                  boxShadow: "0 0 28px rgba(99,102,241,.3)",
-                }}
-              >
-                Começar Trial Grátis →
-              </button>
-              <p
-                style={{
-                  fontSize: "12px",
-                  color: "#64748B",
-                  textAlign: "center",
-                  marginTop: "12px",
-                }}
-              >
-                R$990/mês após o trial · Acesso antecipado
-              </p>
-            </div>
+                    <span style={{ fontSize: "13px", color: "#94A3B8" }}>
+                      /mês
+                    </span>
+                  </div>
+                </div>
 
-            {/* Empresarial */}
-            <div style={S.card}>
-              <div
-                style={{
-                  fontSize: "12px",
-                  fontWeight: 700,
-                  letterSpacing: "1.5px",
-                  textTransform: "uppercase",
-                  color: "#A5B4FC",
-                  marginBottom: "4px",
-                }}
-              >
-                Empresarial
-              </div>
-              <div
-                style={{
-                  fontSize: "13px",
-                  color: "#64748B",
-                  marginBottom: "22px",
-                }}
-              >
-                Médios e grandes escritórios
-              </div>
-              <div style={{ marginBottom: "6px" }}>
-                <span
+                {/* Feature groups */}
+                <div
                   style={{
-                    fontSize: "18px",
-                    fontWeight: 700,
-                    color: "#94A3B8",
-                    verticalAlign: "top",
-                    marginTop: "10px",
-                    display: "inline-block",
+                    flex: 1,
+                    display: "flex",
+                    flexDirection: "column" as const,
+                    gap: "12px",
+                    marginBottom: "16px",
                   }}
                 >
-                  R$
-                </span>
-                <span
-                  style={{
-                    fontSize: "52px",
-                    fontWeight: 900,
-                    letterSpacing: "-2px",
-                    lineHeight: 1,
-                  }}
-                >
-                  2.800
-                </span>
-                <span style={{ fontSize: "14px", color: "#94A3B8" }}>/mês</span>
-              </div>
-              <div
-                style={{
-                  fontSize: "13px",
-                  color: "#22C55E",
-                  marginBottom: "22px",
-                  fontWeight: 500,
-                }}
-              >
-                ✓ 14 dias grátis para começar
-              </div>
-              <div
-                style={{
-                  height: "1px",
-                  background: "rgba(99,102,241,.1)",
-                  marginBottom: "22px",
-                }}
-              />
-              <ul style={{ listStyle: "none", marginBottom: "30px" }}>
-                {[
-                  "Tudo do plano Profissional",
-                  "IA ilimitada para documentos",
-                  "Relatórios personalizados",
-                  "Gestão de usuários e permissões",
-                  "Propostas comerciais integradas",
-                  "10+ usuários · Suporte dedicado",
-                  "Gerente de conta exclusivo",
-                  "SLA garantido · API exclusiva",
-                ].map((f) => (
-                  <li
-                    key={f}
-                    style={{
-                      display: "flex",
-                      alignItems: "flex-start",
-                      gap: "10px",
-                      fontSize: "14px",
-                      color: "#E2E8F0",
-                      padding: "7px 0",
-                      borderBottom: "1px solid rgba(255,255,255,.04)",
-                    }}
-                  >
-                    <span
+                  {plano.grupos.map((grupo) => (
+                    <div key={grupo.title}>
+                      <p
+                        style={{
+                          fontSize: "9px",
+                          fontWeight: 600,
+                          textTransform: "uppercase" as const,
+                          letterSpacing: "0.1em",
+                          color: "#64748B",
+                          marginBottom: "6px",
+                        }}
+                      >
+                        {grupo.title}
+                      </p>
+                      <ul
+                        style={{
+                          listStyle: "none",
+                          display: "flex",
+                          flexDirection: "column" as const,
+                          gap: "4px",
+                        }}
+                      >
+                        {grupo.features.map((feature, i) => (
+                          <li
+                            key={i}
+                            style={{
+                              display: "flex",
+                              alignItems: "flex-start",
+                              gap: "6px",
+                            }}
+                          >
+                            <CampStatusDot status={feature.status} />
+                            <span
+                              style={{
+                                fontSize: "12px",
+                                lineHeight: 1.3,
+                                color:
+                                  feature.status === "unavailable"
+                                    ? "rgba(148,163,184,.4)"
+                                    : "#94A3B8",
+                              }}
+                            >
+                              {feature.label}
+                              {feature.note && (
+                                <span
+                                  style={{
+                                    marginLeft: "4px",
+                                    fontSize: "10px",
+                                    color: "#F59E0B",
+                                    fontWeight: 500,
+                                  }}
+                                >
+                                  ({feature.note})
+                                </span>
+                              )}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+
+                  {/* Limits */}
+                  <div>
+                    <p
                       style={{
-                        color: "#22C55E",
-                        flexShrink: 0,
-                        marginTop: "2px",
+                        fontSize: "9px",
+                        fontWeight: 600,
+                        textTransform: "uppercase" as const,
+                        letterSpacing: "0.1em",
+                        color: "#64748B",
+                        marginBottom: "6px",
                       }}
                     >
-                      ✓
-                    </span>
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <button
-                onClick={() => openModal("empresarial")}
+                      Limites
+                    </p>
+                    <p
+                      style={{
+                        fontSize: "12px",
+                        color: "#94A3B8",
+                        lineHeight: 1.5,
+                      }}
+                    >
+                      {plano.limites}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Button */}
+                <button
+                  onClick={() => openModal(plano.nome as PlanName)}
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    textAlign: "center",
+                    fontWeight: 700,
+                    fontSize: "14px",
+                    padding: "11px",
+                    borderRadius: "10px",
+                    cursor: "pointer",
+                    fontFamily: "'Inter', sans-serif",
+                    transition: "all .2s",
+                    ...(plano.popular
+                      ? {
+                          background:
+                            "linear-gradient(135deg, #6366F1, #3B82F6)",
+                          color: "#fff",
+                          border: "none",
+                          boxShadow: "0 0 20px rgba(99,102,241,.3)",
+                        }
+                      : {
+                          background: "transparent",
+                          color: "#E2E8F0",
+                          border: "1px solid rgba(99,102,241,.22)",
+                        }),
+                  }}
+                >
+                  Escolher Plano →
+                </button>
+              </div>
+            ))}
+          </div>
+
+          {/* Legend */}
+          <div
+            style={{
+              marginTop: "24px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "24px",
+              fontSize: "13px",
+              color: "#64748B",
+              flexWrap: "wrap" as const,
+            }}
+          >
+            <span style={{ fontWeight: 600, color: "rgba(241,245,249,.6)" }}>
+              Legenda:
+            </span>
+            <span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+              <span
                 style={{
-                  display: "block",
-                  width: "100%",
-                  textAlign: "center",
-                  fontWeight: 700,
-                  fontSize: "15px",
-                  padding: "15px",
-                  borderRadius: "12px",
-                  cursor: "pointer",
-                  background: "transparent",
-                  color: "#E2E8F0",
-                  border: "1px solid rgba(99,102,241,.22)",
-                  fontFamily: "'Inter', sans-serif",
+                  width: "10px",
+                  height: "10px",
+                  borderRadius: "50%",
+                  background: "#22C55E",
+                  display: "inline-block",
                 }}
-              >
-                Começar Trial Grátis →
-              </button>
-              <p
+              />
+              Incluído
+            </span>
+            <span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+              <span
                 style={{
-                  fontSize: "12px",
-                  color: "#64748B",
-                  textAlign: "center",
-                  marginTop: "12px",
+                  width: "10px",
+                  height: "10px",
+                  borderRadius: "50%",
+                  background: "#FBBF24",
+                  display: "inline-block",
                 }}
-              >
-                R$2.800/mês após o trial · Sem fidelidade
-              </p>
-            </div>
+              />
+              Limitado
+            </span>
+            <span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+              <span
+                style={{
+                  width: "10px",
+                  height: "10px",
+                  borderRadius: "50%",
+                  background: "rgba(148,163,184,.3)",
+                  display: "inline-block",
+                }}
+              />
+              Não disponível
+            </span>
           </div>
         </div>
       </section>

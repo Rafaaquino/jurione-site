@@ -55,7 +55,7 @@ Ordem de renderização:
 8. `Benefits` — benefícios para o usuário
 9. `Customization` — opções de personalização
 10. `Testimonials` — depoimentos
-11. `Pricing` — 3 planos (Básico R$320, Profissional R$990, Empresarial R$2.500)
+11. `Pricing` — 4 planos (Básico R$180, Intermediário R$290, Profissional R$720, Empresarial R$2.800)
 12. `FAQ` — perguntas frequentes
 13. `Contact` — formulário de contato
 14. `CTA` — chamada para ação final
@@ -185,6 +185,7 @@ As estratégias de marketing digital do JuriOne estão documentadas em:
 **ICP (Persona Primária):** Advogado autônomo ou sócio de escritório pequeno/médio, SP/RJ/MG/PR/SC, OAB ativa, que perde tempo com documentação repetitiva.
 
 **Planos:**
-- Básico: R$320/mês
-- Profissional: R$990/mês
-- Empresarial: R$2.500/mês
+- Básico: R$180/mês
+- Intermediário: R$290/mês
+- Profissional: R$720/mês
+- Empresarial: R$2.800/mês
