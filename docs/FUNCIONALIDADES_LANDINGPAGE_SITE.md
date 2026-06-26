@@ -1,7 +1,7 @@
 # JuriOne Landing Page — Documentação de Funcionalidades
 
 > Documento de referência para LLMs. Descreve toda a estrutura, fluxos, conteúdo e comportamentos do site `jurione.com.br`.
-> **Atualizado em:** 2026-05-17 · **Versão:** 1.1
+> **Atualizado em:** 2026-06-26 · **Versão:** 1.2
 
 ---
 
@@ -50,7 +50,7 @@ Site de marketing/landing page do **JuriOne** (`jurione.com.br`). É um site est
 ```
 src/
 ├── pages/
-│   ├── Index.tsx             # Página principal (composição das 16 seções)
+│   ├── Index.tsx             # Página principal (composição das 17 seções)
 │   ├── Campanha.tsx          # Landing page de campanha (standalone, sem Header/Footer da home)
 │   ├── Afiliado.tsx          # Fluxo de rastreamento de afiliados
 │   ├── PrivacyPolicy.tsx     # Política de privacidade
@@ -58,11 +58,12 @@ src/
 │   ├── LGPD.tsx              # Página LGPD
 │   └── NotFound.tsx          # 404
 ├── components/
-│   ├── landing/              # 16 seções da landing page
+│   ├── landing/              # 17 seções da landing page
 │   │   ├── Header.tsx
 │   │   ├── Hero.tsx
 │   │   ├── Stats.tsx
 │   │   ├── Features.tsx
+│   │   ├── ImportAutomation.tsx  # NOVA — Integração CNJ & OAB
 │   │   ├── Apps.tsx
 │   │   ├── ProductDemo.tsx
 │   │   ├── AIHighlight.tsx
@@ -79,8 +80,10 @@ src/
 ├── config/
 │   └── site.ts               # Variáveis de contato lidas do .env
 ├── services/
-│   └── api.ts                # enviarContato() → POST /api/contato
-├── hooks/                    # Custom hooks React
+│   ├── api.ts                # enviarContato() → POST /api/contato · cadastroRapido()
+│   └── planos.ts             # fetchPlanosPublicos() → GET /api/planos/publicos
+├── hooks/
+│   └── use-planos.ts         # usePlanos() — TanStack Query para planos públicos da API
 ├── models/                   # Interfaces de domínio
 └── types/                    # Tipos globais TypeScript
 ```
@@ -88,6 +91,8 @@ src/
 ---
 
 ## 5. Seções da Landing Page (Ordem de Renderização)
+
+> A landing page agora possui **17 seções** (era 16). A nova seção `ImportAutomation` foi inserida entre `Features` e `Apps`.
 
 ### 5.1 Header
 
@@ -142,7 +147,20 @@ Grid de **9 funcionalidades** do produto:
 
 ---
 
-### 5.5 Apps
+### 5.5 ImportAutomation *(novo)*
+
+Seção de integração CNJ & OAB com ID `#importacao`, inserida entre `Features` e `Apps`. Grid de **4 cards** com Framer Motion:
+
+| Card | Descrição |
+|------|-----------|
+| Importação via CNJ | Informa o número CNJ e o sistema busca, cadastra e organiza o processo (partes, advogados, status, histórico) automaticamente |
+| Importação em Massa via OAB | Digita o número OAB e importa todos os processos ativos de uma só vez — ideal para migração |
+| Monitoramento Automático | Após importação, monitora cada processo e alerta sobre movimentações, prazos e publicações em tempo real |
+| Clientes Importados Automaticamente | Durante a importação dos processos, identifica e cadastra os clientes vinculados automaticamente |
+
+---
+
+### 5.6 Apps *(era 5.5)*
 
 **8 aplicativos** extras inclusos na plataforma, exibidos como cards com gradientes coloridos:
 
@@ -157,7 +175,7 @@ Grid de **9 funcionalidades** do produto:
 
 ---
 
-### 5.6 ProductDemo
+### 5.7 ProductDemo *(era 5.6)*
 
 - Player de vídeo embutido (`demo-sistema.mp4` em `/public`)
 - Botão de play customizado com animação pulse
@@ -166,7 +184,7 @@ Grid de **9 funcionalidades** do produto:
 
 ---
 
-### 5.7 AIHighlight
+### 5.8 AIHighlight *(era 5.7)*
 
 Seção de destaque das capacidades de IA com:
 
@@ -179,7 +197,7 @@ Seção de destaque das capacidades de IA com:
 
 ---
 
-### 5.8 Benefits
+### 5.9 Benefits *(era 5.8)*
 
 Seção de benefícios com dois blocos:
 
@@ -200,7 +218,7 @@ Seção de benefícios com dois blocos:
 
 ---
 
-### 5.9 Customization
+### 5.10 Customization *(era 5.9)*
 
 Seção voltada para **escritórios médios e grandes** que precisam de solução white-label ou exclusiva:
 
@@ -210,7 +228,7 @@ Seção voltada para **escritórios médios e grandes** que precisam de soluçã
 
 ---
 
-### 5.10 Testimonials
+### 5.11 Testimonials *(era 5.10)*
 
 **3 depoimentos** de advogados fictícios com 5 estrelas:
 
@@ -222,24 +240,27 @@ Seção voltada para **escritórios médios e grandes** que precisam de soluçã
 
 ---
 
-### 5.11 Pricing
+### 5.12 Pricing *(era 5.11 — carregamento dinâmico via API)*
 
-**3 planos de assinatura** + seção de plano personalizado:
+Os planos **não são mais estáticos** — são carregados via `usePlanos()` → `GET /api/planos/publicos`. O componente renderiza **4 colunas** baseado nos planos ativos retornados pela API, ordenados pelo campo `ordem`.
 
-| Plano | Preço/mês | Destaque |
-|-------|-----------|---------|
-| Básico | R$ 320 | — |
-| Profissional | R$ 990 | "Mais Popular" |
-| Empresarial | R$ 2.800 | Card featured/dourado |
+**Estrutura de cada card de plano:**
+- Nome de exibição (`display_name`) e subtítulo
+- Preço em centavos ÷ 100, formatado em pt-BR
+- Grupos de funcionalidades com status visual (`included` verde / `limited` amarelo / `unavailable` cinza):
+  - **Core:** gestão de processos, clientes, contratos, notificações push, relatórios, gestão de usuários, financeiro
+  - **Apps disponíveis:** 8 apps + acesso antecipado a novos apps
+  - **IA:** tokens mensais formatados (ex.: "300k tokens/mês") ou "IA ilimitada"
+  - **Limites:** usuários, armazenamento, API requests/mês, backup, suporte
+- Legenda visual ao rodapé (incluído / limitado / não disponível)
 
-- Cada card exibe lista de funcionalidades incluídas
-- Botão "Assinar" redireciona para `jurione.app.br/register?plan=PLANO`
-- Suporte a parâmetro de afiliado: se houver `?ref=CODE` na URL atual, ele é repassado para `jurione.app.br/register?plan=PLANO&ref=CODE`
-- Seção "Plano Personalizado" com CTA para contato direto (empresas com necessidades customizadas)
+**Botão CTA:** `redirectToSignup(planNome)` → abre `{systemUrl}/auth/signup?plan={nome}&source=landing_pricing&utm_source=landing_pricing&utm_campaign=paid_plan_pricing[&ref=CODE]` em nova aba. Propaga `?ref=CODE` se presente na URL.
+
+**Seção "Plano Customizado"** (estática) com CTA que ancora para `#contato`.
 
 ---
 
-### 5.12 FAQ
+### 5.13 FAQ *(era 5.12)*
 
 **8 perguntas frequentes** em componente Accordion (Radix UI):
 
@@ -254,7 +275,7 @@ Seção voltada para **escritórios médios e grandes** que precisam de soluçã
 
 ---
 
-### 5.13 Contact
+### 5.14 Contact *(era 5.13)*
 
 Formulário de contato com dois blocos:
 
@@ -278,7 +299,7 @@ Formulário de contato com dois blocos:
 
 ---
 
-### 5.14 CTA (Final)
+### 5.15 CTA *(era 5.14)*
 
 - Seção de chamada para ação de encerramento
 - Botão primário: "Começar Trial" → `jurione.app.br/register`
@@ -287,7 +308,7 @@ Formulário de contato com dois blocos:
 
 ---
 
-### 5.15 Footer
+### 5.16 Footer *(era 5.15)*
 
 - Logo e tagline do JuriOne
 - Informações de contato (e-mail, telefone, localização — via `SITE_CONTACT`)
@@ -309,15 +330,17 @@ Página standalone criada para receber tráfego pago (Google Ads, Meta Ads). **N
 | Bloco | Conteúdo |
 |-------|---------|
 | Nav mínimo | Logo + "Já tem conta? Entrar" + botão "Teste Grátis →" |
-| Hero | Headline impactante, subheadline, CTA primário, trust badges |
-| Urgência | Banner de condições especiais de lançamento |
+| Hero | Headline "Pare de perder o controle do seu escritório", subheadline, CTAs, trust badges |
+| Urgência | Banner de novos preços de lançamento (Básico R$180 · Intermediário R$290) |
 | Stats | 4 métricas numéricas com gradiente (4h, 0 prazos, 3×, 100%) |
-| Antes/Depois | Comparativo visual sem JuriOne × com JuriOne + bloco de prazo urgente |
-| Funcionalidades | Grid 3×3 com 9 funcionalidades (3 destacadas como "Destaque") |
+| Antes/Depois | Bloco de alerta "Prazo perdido = processo perdido" + comparativo 6×6 sem/com JuriOne |
+| Importação CNJ/OAB *(novo)* | Grid 2×2 com 4 cards: Importação via CNJ, Importação em Massa via OAB, Monitoramento Automático, Clientes Importados Automaticamente |
+| Chat com IA *(novo)* | Mock visual de chat com 4 capabilities + CTA "Testar o Chat com IA" |
+| Funcionalidades | Grid 3×3 com 9 funcionalidades (3 destacadas: Controle de Prazos, Gestão de Processos, Chat com IA Jurídica) |
+| Screenshot do sistema | Imagem `/tela-do-sistema.png` em frame de browser simulado |
 | Como funciona | 3 passos numerados |
 | Depoimentos | 3 cards com avatares iniciais e estrelas |
-| Pricing | 3 planos (Básico R$320 / Profissional R$990 / Empresarial R$2.800) — cada botão abre o modal de cadastro com o plano pré-selecionado |
-| Garantia | Bloco de segurança "14 dias grátis, sem cartão, sem armadilha" |
+| Pricing | 4 planos carregados da API via `usePlanos()` — cada botão abre o modal com o plano pré-selecionado |
 | FAQ | 7 perguntas com accordion customizado (sem Radix UI — CSS puro) |
 | CTA final | Seção de fechamento com botão de cadastro |
 | Footer mínimo | Links legais apenas (Termos · Privacidade · LGPD) |
@@ -338,23 +361,49 @@ Abre inline na mesma página (sem redirecionar para `jurione.app.br`). 4 campos:
 **Fluxo de submit:**
 1. Validação client-side (inline, sem biblioteca de forms)
 2. `POST {VITE_API_URL}/auth/cadastro-rapido` via `cadastroRapido()` de `api.ts`
-3. Sucesso → GTM `trial_signup` → exibe tela de confirmação com countdown 3s → redireciona para `{VITE_APP_URL}/auth/login?email=EMAIL&source=campanha`
+3. Sucesso → GTM `trial_signup` (com `office_name` no payload) → exibe tela de confirmação com countdown 3s → redireciona para `{VITE_API_SITE}/auth/login?email=EMAIL&source=campanha`
 4. Erro email duplicado → exibe mensagem inline no modal (não fecha)
+5. Modal fecha ao clicar fora ou pressionar `Escape`; enquanto `loading`, o fechamento é bloqueado
 
-**Plano pré-selecionado:** cada botão de pricing passa o plano para o modal (`"trial"` | `"basico"` | `"profissional"` | `"empresarial"`). O label é exibido no modal para reforçar a escolha.
+**Plano pré-selecionado:** cada botão de pricing passa o plano para o modal (`"trial"` | `"basico"` | `"intermediario"` | `"profissional"` | `"empresarial"`). O label mapeado é exibido no modal para reforçar a escolha:
 
-### 6.3 Eventos GTM da Página de Campanha
+| PlanName | Label exibido |
+|----------|--------------|
+| `trial` | Trial Gratuito (14 dias) |
+| `basico` | Plano Básico — R$180/mês |
+| `intermediario` | Plano Intermediário — R$290/mês |
+| `profissional` | Plano Profissional — R$720/mês |
+| `empresarial` | Plano Empresarial — R$2.800/mês |
+
+### 6.3 Seção Chat com IA *(novo)*
+
+Mock visual de assistente de IA jurídico com:
+- Header do chat (avatar, título "JuriOne IA", status "Online")
+- 2 pares de mensagem usuário/IA simulados (consulta de processos + geração de contestação)
+- Barra de input ilustrativa
+- **4 capabilities** listadas ao lado:
+  1. Consulte seus dados em linguagem natural
+  2. Gere documentos direto no chat
+  3. Tire dúvidas jurídicas com contexto
+  4. Relatórios e análises sob demanda
+- CTA "Testar o Chat com IA" abre modal com plano `"trial"`
+
+### 6.4 Pricing da Campanha — carregamento dinâmico *(mudança)*
+
+Os planos agora são carregados da API via `usePlanos()` (mesmo hook da home) em vez de serem estáticos. Exibe **4 planos** ordenados pelo campo `ordem` retornado pela API, com spinner de loading durante a busca. Cada plano mostra features com status colorido e botão que abre o `CadastroModal` com o plano correspondente.
+
+### 6.5 Eventos GTM da Página de Campanha
 
 | Evento | Quando dispara | Payload |
 |--------|---------------|---------|
 | `signup_modal_open` | Ao abrir o modal | `{ plan_name, source: "campanha" }` |
-| `trial_signup` | Cadastro concluído com sucesso | `{ plan_name, source: "campanha" }` |
+| `trial_signup` | Cadastro concluído com sucesso | `{ plan_name, source: "campanha", office_name }` |
 | `signup_error` | Erro no cadastro | `{ error_msg }` |
 | `faq_click` | Clique em item do FAQ | `{ faq_question }` |
 
 O evento `trial_signup` é o **key event** configurado no Google Ads para contabilizar conversões de campanha.
 
-### 6.4 Endpoint de Backend
+### 6.6 Endpoint de Backend
 
 `POST /api/auth/cadastro-rapido` — público, sem auth, com rate limit dedicado (5 req/15min por IP).
 
@@ -380,9 +429,9 @@ Cria em uma única transação: `Tenant` (status `TRIAL`, 14 dias) + `Usuario` (
 
 ---
 
-## 8. Serviço de API
+## 8. Serviços de API
 
-**Arquivo:** `src/services/api.ts`
+### 8.1 `src/services/api.ts`
 
 Duas funções exportadas:
 
@@ -417,6 +466,51 @@ interface CadastroRapidoData {
 
 **Tratamento de erros em `cadastroRapido()`:** lança `Error` com `err.code = "EMAIL_ALREADY_EXISTS"` (HTTP 409) quando o e-mail já está cadastrado — o modal exibe mensagem inline sem fechar.
 
+### 8.2 `src/services/planos.ts` *(novo)*
+
+```typescript
+// Busca planos públicos para exibição na landing page e campanha
+fetchPlanosPublicos(): Promise<PlanoPublico[]>
+// GET {VITE_API_URL}/planos/publicos
+```
+
+**Interface `PlanoPublico`** (retorno da API):
+
+```typescript
+interface PlanoPublico {
+  id: string;
+  nome: string;
+  display_name: string;
+  descricao?: string;
+  subtitulo?: string;
+  preco: number;          // centavos
+  ordem: number;
+  popular: boolean;
+  destaque: boolean;
+  stripe_price_id: string;
+  limite_usuarios: number;
+  ia_tokens_mensais: number;
+  recursos: { [feature: string]: boolean };
+  limites: {
+    armazenamento: number;
+    api_requests: number;
+    backup_automatico: boolean;
+  };
+}
+```
+
+### 8.3 `src/hooks/use-planos.ts` *(novo)*
+
+Hook TanStack Query que encapsula `fetchPlanosPublicos()` e transforma os dados brutos em `PlanoView[]` (formato pronto para renderização). Usado por `Pricing.tsx` (home) e `Campanha.tsx`.
+
+```typescript
+export function usePlanos(): UseQueryResult<PlanoView[], Error>
+// queryKey: ["planos-publicos"]
+// staleTime: 5 min · retry: 2
+```
+
+`PlanoView` inclui `grupos: FeatureGroup[]` já montados com `FeatureStatus` (`"included"` | `"limited"` | `"unavailable"`) e `limites: string` formatado para exibição.
+
 ---
 
 ## 9. Configuração Global
@@ -442,8 +536,9 @@ SITE_CONTACT = {
 
 | Variável | Uso |
 |----------|-----|
-| `VITE_API_URL` | URL base da API (usada em `enviarContato` e `cadastroRapido`) |
-| `VITE_APP_URL` | URL da aplicação (`https://jurione.app.br`) — usada nos redirects da campanha |
+| `VITE_API_URL` | URL base da API (usada em `enviarContato`, `cadastroRapido` e `fetchPlanosPublicos`) |
+| `VITE_APP_URL` | URL da aplicação (`https://jurione.app.br`) — usada no `Pricing.tsx` (home) para redirects de signup |
+| `VITE_API_SITE` | URL da aplicação usada especificamente na página `/campanha` para o redirect pós-cadastro |
 | `VITE_CONTACT_EMAIL` | E-mail de contato exibido no site |
 | `VITE_PRIVACY_EMAIL` | E-mail para solicitações de privacidade |
 | `VITE_LEGAL_EMAIL` | E-mail jurídico |
@@ -543,7 +638,7 @@ Todas renderizadas via `LegalLayout.tsx` (wrapper com navegação e rodapé simp
 |-------|---------|
 | Header "Começar Trial" | `jurione.app.br/register` |
 | Hero CTA primário | `jurione.app.br/register` |
-| Cards de Pricing | `jurione.app.br/register?plan=PLANO[&ref=CODE]` |
+| Cards de Pricing | `{systemUrl}/auth/signup?plan=PLANO&source=landing_pricing&utm_source=landing_pricing&utm_campaign=paid_plan_pricing[&ref=CODE]` (nova aba) |
 | Seção CTA final | `jurione.app.br/register` |
 | Sistema de Afiliados | `jurione.app.br/register?ref=CODE` |
 | Header "Entrar" | `jurione.app.br` (login existente) |
@@ -556,9 +651,11 @@ Todas renderizadas via `LegalLayout.tsx` (wrapper com navegação e rodapé simp
 | Nav "Teste Grátis →" | Abre modal de cadastro rápido (plano `trial`) |
 | Hero CTA primário | Abre modal de cadastro rápido (plano `trial`) |
 | "Ver Planos e Preços" | Âncora `#planos` (rolagem suave, sem redirecionar) |
+| CTA "Testar o Chat com IA" | Abre modal de cadastro rápido (plano `trial`) |
 | Botão plano Básico | Abre modal de cadastro rápido (plano `basico`) |
+| Botão plano Intermediário | Abre modal de cadastro rápido (plano `intermediario`) |
 | Botão plano Profissional | Abre modal de cadastro rápido (plano `profissional`) |
 | Botão plano Empresarial | Abre modal de cadastro rápido (plano `empresarial`) |
 | CTA final | Abre modal de cadastro rápido (plano `trial`) |
-| Sucesso no modal | Redirect: `jurione.app.br/auth/login?email=EMAIL&source=campanha` |
-| "Já tem conta? Entrar" | `jurione.app.br/auth/login` |
+| Sucesso no modal | Redirect: `{VITE_API_SITE}/auth/login?email=EMAIL&source=campanha` |
+| "Já tem conta? Entrar" | `{VITE_API_SITE}/auth/login` |

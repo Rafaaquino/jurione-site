@@ -4,6 +4,7 @@ import { Stats } from "@/components/landing/Stats";
 import { Features } from "@/components/landing/Features";
 import { Apps } from "@/components/landing/Apps";
 import { ProductDemo } from "@/components/landing/ProductDemo";
+import { ImportAutomation } from "@/components/landing/ImportAutomation";
 import { AIHighlight } from "@/components/landing/AIHighlight";
 import { Benefits } from "@/components/landing/Benefits";
 import { Customization } from "@/components/landing/Customization";
@@ -22,6 +23,7 @@ const Index = () => {
         <Hero />
         <Stats />
         <Features />
+        <ImportAutomation />
         <Apps />
         <ProductDemo />
         <AIHighlight />

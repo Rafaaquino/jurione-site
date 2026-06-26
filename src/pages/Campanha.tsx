@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { cadastroRapido } from "@/services/api";
-import { usePlanos, type FeatureStatus as CampFeatureStatus } from "@/hooks/use-planos";
+import {
+  usePlanos,
+  type FeatureStatus as CampFeatureStatus,
+} from "@/hooks/use-planos";
 
 const APP_URL = import.meta.env.VITE_API_SITE;
 
@@ -706,7 +709,6 @@ const S: Record<string, React.CSSProperties> = {
 
 // ─── Pricing data ─────────────────────────────────────────────────────────────
 
-
 function CampStatusDot({ status }: { status: CampFeatureStatus }) {
   const base: React.CSSProperties = {
     width: "10px",
@@ -1285,163 +1287,54 @@ export default function Campanha() {
         </div>
       </section>
 
-      {/* ── SCREENSHOT DO SISTEMA ────────────────────────────────── */}
-      <section style={{ padding: "72px 0 56px" }}>
-        <div style={S.con}>
-          <div style={{ textAlign: "center", marginBottom: "40px" }}>
-            <span style={S.slabel}>O Sistema</span>
-            <h2 style={{ ...S.stitle, marginBottom: "12px" }}>
-              Veja o JuriOne <span style={GT}>por dentro</span>
-            </h2>
-            <p style={{ ...S.ssub, marginBottom: 0 }}>
-              Interface moderna, intuitiva e desenhada para a rotina do advogado
-              brasileiro
-            </p>
-          </div>
-
-          <div
-            style={{
-              position: "relative",
-              borderRadius: "20px",
-              overflow: "hidden",
-              border: "1px solid rgba(99,102,241,.22)",
-              boxShadow:
-                "0 32px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(99,102,241,.08)",
-            }}
-          >
-            {/* Browser chrome bar */}
-            <div
-              style={{
-                background: "rgba(15,20,40,.97)",
-                borderBottom: "1px solid rgba(99,102,241,.12)",
-                padding: "10px 16px",
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-              }}
-            >
-              <div style={{ display: "flex", gap: "6px" }}>
-                {["#EF4444", "#F59E0B", "#22C55E"].map((c) => (
-                  <div
-                    key={c}
-                    style={{
-                      width: "11px",
-                      height: "11px",
-                      borderRadius: "50%",
-                      background: c,
-                      opacity: 0.8,
-                    }}
-                  />
-                ))}
-              </div>
-              <div
-                style={{
-                  flex: 1,
-                  background: "rgba(99,102,241,.07)",
-                  border: "1px solid rgba(99,102,241,.12)",
-                  borderRadius: "6px",
-                  padding: "4px 12px",
-                  fontSize: "11px",
-                  color: "#475569",
-                  textAlign: "center",
-                }}
-              >
-                app.jurione.com.br
-              </div>
-            </div>
-
-            <img
-              src="/tela-do-sistema.png"
-              alt="Tela do sistema JuriOne"
-              style={{ width: "100%", height: "auto", display: "block" }}
-              loading="lazy"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* ── FUNCIONALIDADES ──────────────────────────────────────── */}
+      {/* ── IMPORTAÇÃO CNJ / OAB ─────────────────────────────────── */}
       <section style={S.sec}>
         <div style={S.con}>
-          <span style={S.slabel}>Funcionalidades</span>
+          <span style={S.slabel}>Integração CNJ &amp; OAB</span>
           <h2 style={S.stitle}>
-            Tudo que seu escritório precisa
+            Importe seus processos.
             <br />
-            <span style={GT}>em uma plataforma</span>
+            <span style={GT}>O sistema faz o resto.</span>
           </h2>
           <p style={S.ssub}>
-            Não é um conjunto de ferramentas separadas. É um sistema integrado
-            onde cada módulo conversa com os outros.
+            Chega de cadastro manual. Informe o CNJ ou o número OAB e o JuriOne
+            importa, organiza e começa a monitorar automaticamente — junto com
+            os clientes vinculados.
           </p>
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
+              gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)",
               gap: "18px",
               marginTop: "52px",
             }}
           >
             {[
               {
-                icon: "⏰",
-                title: "Controle de Prazos com Alertas",
-                desc: "Nunca mais perca um prazo processual. Configure alertas com antecedência personalizável — 30, 15, 7, 3 e 1 dia antes. Notificações push para toda a equipe responsável.",
-                tag: "Mais usado",
+                icon: "⚖️",
+                title: "Importação via CNJ",
+                desc: "Informe o número CNJ e o sistema busca, cadastra e organiza o processo automaticamente — partes, advogados, status e histórico completo. Sem digitação.",
+                tag: "Automático",
                 highlight: true,
               },
               {
-                icon: "📁",
-                title: "Gestão de Processos Completa",
-                desc: "Acompanhe cada processo com status, histórico de movimentações, documentos anexados, prazos, audiências e responsáveis — tudo em um único lugar, com linha do tempo visual.",
-                tag: "Controle total",
+                icon: "👨‍⚖️",
+                title: "Importação em Massa via OAB",
+                desc: "Digite o número OAB do advogado e importe todos os seus processos ativos de uma só vez. Ideal para quem está migrando para o JuriOne.",
+                tag: "Migração fácil",
                 highlight: true,
               },
               {
-                icon: "🤖",
-                title: "Chat com IA Jurídica Inteligente",
-                desc: "Converse com a IA em linguagem natural: consulte processos, clientes e contratos, gere petições e contestações, tire dúvidas jurídicas — tudo em um chat integrado ao seu escritório. 45 segundos, não 3 horas.",
-                tag: "IA especializada",
-                highlight: true,
-              },
-              {
-                icon: "📝",
-                title: "Análise de Contratos com IA",
-                desc: "Envie qualquer contrato e a IA identifica cláusulas abusivas, inconsistências e pontos de risco. Relatório detalhado em minutos — antes de assinar, não depois de se arrepender.",
+                icon: "🔔",
+                title: "Monitoramento Automático",
+                desc: "Após a importação, o JuriOne monitora cada processo e alerta sobre novas movimentações, prazos e publicações em tempo real. Nunca perca uma atualização.",
                 tag: null,
                 highlight: false,
               },
               {
-                icon: "🧮",
-                title: "Calculadoras Jurídicas",
-                desc: "Calcule honorários advocatícios, juros, correção monetária (INPC, IPCA, SELIC), FGTS, verbas rescisórias e muito mais. Resultados exportáveis em PDF para juntar ao processo.",
-                tag: null,
-                highlight: false,
-              },
-              {
-                icon: "👥",
-                title: "Gestão de Clientes",
-                desc: "Cadastro completo com histórico de atendimentos, documentos, processos vinculados e honorários. Busca automática de dados por CPF e CNPJ. Tudo acessível em segundos.",
-                tag: null,
-                highlight: false,
-              },
-              {
-                icon: "💰",
-                title: "Módulo Financeiro",
-                desc: "Controle de honorários, receitas e despesas do escritório. Emissão de recibos, relatórios mensais, inadimplência e projeção financeira. Sem surpresas no fim do mês.",
-                tag: null,
-                highlight: false,
-              },
-              {
-                icon: "📅",
-                title: "Agenda e Audiências",
-                desc: "Calendário integrado com processos e prazos. Registre audiências, reuniões e compromissos. Sincronize com sua equipe e receba lembretes automáticos com antecedência.",
-                tag: null,
-                highlight: false,
-              },
-              {
-                icon: "📊",
-                title: "Relatórios e Dashboards",
-                desc: "Visão geral do escritório em tempo real: processos por status, prazos próximos, produtividade da equipe, receita do mês. Exporte em PDF ou Excel com um clique.",
+                icon: "🤝",
+                title: "Clientes Importados Automaticamente",
+                desc: "Durante a importação dos processos, o sistema identifica e cadastra os clientes vinculados automaticamente. Nenhum dado precisa ser digitado duas vezes.",
                 tag: null,
                 highlight: false,
               },
@@ -1458,38 +1351,30 @@ export default function Campanha() {
                     : {}),
                 }}
               >
-                {f.highlight && (
+                {f.highlight && f.tag && (
                   <div
                     style={{
                       position: "absolute",
-                      top: "12px",
-                      right: "12px",
-                      background: "rgba(99,102,241,.12)",
-                      border: "1px solid rgba(99,102,241,.25)",
+                      top: "14px",
+                      right: "14px",
+                      background: "rgba(99,102,241,.15)",
+                      border: "1px solid rgba(99,102,241,.3)",
                       borderRadius: "20px",
-                      fontSize: "10px",
-                      fontWeight: 700,
-                      letterSpacing: "1px",
-                      textTransform: "uppercase",
-                      color: "#A5B4FC",
                       padding: "3px 10px",
+                      fontSize: "11px",
+                      fontWeight: 700,
+                      color: "#A5B4FC",
+                      letterSpacing: "0.5px",
                     }}
                   >
-                    ⭐ Destaque
+                    {f.tag}
                   </div>
                 )}
                 <div
                   style={{
-                    width: "48px",
-                    height: "48px",
-                    borderRadius: "14px",
-                    background: "rgba(99,102,241,.1)",
-                    border: "1px solid rgba(99,102,241,.2)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "24px",
-                    marginBottom: "18px",
+                    fontSize: "32px",
+                    marginBottom: "14px",
+                    lineHeight: 1,
                   }}
                 >
                   {f.icon}
@@ -1499,6 +1384,7 @@ export default function Campanha() {
                     fontSize: "17px",
                     fontWeight: 700,
                     marginBottom: "10px",
+                    paddingRight: f.tag ? "80px" : "0",
                   }}
                 >
                   {f.title}
@@ -1507,28 +1393,11 @@ export default function Campanha() {
                   style={{
                     fontSize: "14px",
                     color: "#94A3B8",
-                    lineHeight: 1.6,
+                    lineHeight: 1.65,
                   }}
                 >
                   {f.desc}
                 </p>
-                {f.tag && (
-                  <div
-                    style={{
-                      display: "inline-block",
-                      fontSize: "11px",
-                      fontWeight: 600,
-                      color: "#4ADE80",
-                      background: "rgba(34,197,94,.1)",
-                      border: "1px solid rgba(34,197,94,.2)",
-                      borderRadius: "20px",
-                      padding: "3px 10px",
-                      marginTop: "14px",
-                    }}
-                  >
-                    {f.tag}
-                  </div>
-                )}
               </div>
             ))}
           </div>
@@ -1930,6 +1799,256 @@ export default function Campanha() {
         </div>
       </section>
 
+      {/* ── FUNCIONALIDADES ──────────────────────────────────────── */}
+      <section style={S.sec}>
+        <div style={S.con}>
+          <span style={S.slabel}>Funcionalidades</span>
+          <h2 style={S.stitle}>
+            Tudo que seu escritório precisa
+            <br />
+            <span style={GT}>em uma plataforma</span>
+          </h2>
+          <p style={S.ssub}>
+            Não é um conjunto de ferramentas separadas. É um sistema integrado
+            onde cada módulo conversa com os outros.
+          </p>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)",
+              gap: "18px",
+              marginTop: "52px",
+            }}
+          >
+            {[
+              {
+                icon: "⏰",
+                title: "Controle de Prazos com Alertas",
+                desc: "Nunca mais perca um prazo processual. Configure alertas com antecedência personalizável — 30, 15, 7, 3 e 1 dia antes. Notificações push para toda a equipe responsável.",
+                tag: "Mais usado",
+                highlight: true,
+              },
+              {
+                icon: "📁",
+                title: "Gestão de Processos Completa",
+                desc: "Acompanhe cada processo com status, histórico de movimentações, documentos anexados, prazos, audiências e responsáveis — tudo em um único lugar, com linha do tempo visual.",
+                tag: "Controle total",
+                highlight: true,
+              },
+              {
+                icon: "🤖",
+                title: "Chat com IA Jurídica Inteligente",
+                desc: "Converse com a IA em linguagem natural: consulte processos, clientes e contratos, gere petições e contestações, tire dúvidas jurídicas — tudo em um chat integrado ao seu escritório. 45 segundos, não 3 horas.",
+                tag: "IA especializada",
+                highlight: true,
+              },
+              {
+                icon: "📝",
+                title: "Análise de Contratos com IA",
+                desc: "Envie qualquer contrato e a IA identifica cláusulas abusivas, inconsistências e pontos de risco. Relatório detalhado em minutos — antes de assinar, não depois de se arrepender.",
+                tag: null,
+                highlight: false,
+              },
+              {
+                icon: "🧮",
+                title: "Calculadoras Jurídicas",
+                desc: "Calcule honorários advocatícios, juros, correção monetária (INPC, IPCA, SELIC), FGTS, verbas rescisórias e muito mais. Resultados exportáveis em PDF para juntar ao processo.",
+                tag: null,
+                highlight: false,
+              },
+              {
+                icon: "👥",
+                title: "Gestão de Clientes",
+                desc: "Cadastro completo com histórico de atendimentos, documentos, processos vinculados e honorários. Busca automática de dados por CPF e CNPJ. Tudo acessível em segundos.",
+                tag: null,
+                highlight: false,
+              },
+              {
+                icon: "💰",
+                title: "Módulo Financeiro",
+                desc: "Controle de honorários, receitas e despesas do escritório. Emissão de recibos, relatórios mensais, inadimplência e projeção financeira. Sem surpresas no fim do mês.",
+                tag: null,
+                highlight: false,
+              },
+              {
+                icon: "📅",
+                title: "Agenda e Audiências",
+                desc: "Calendário integrado com processos e prazos. Registre audiências, reuniões e compromissos. Sincronize com sua equipe e receba lembretes automáticos com antecedência.",
+                tag: null,
+                highlight: false,
+              },
+              {
+                icon: "📊",
+                title: "Relatórios e Dashboards",
+                desc: "Visão geral do escritório em tempo real: processos por status, prazos próximos, produtividade da equipe, receita do mês. Exporte em PDF ou Excel com um clique.",
+                tag: null,
+                highlight: false,
+              },
+            ].map((f) => (
+              <div
+                key={f.title}
+                style={{
+                  ...S.card,
+                  ...(f.highlight
+                    ? {
+                        borderColor: "rgba(99,102,241,.3)",
+                        background: "rgba(99,102,241,.05)",
+                      }
+                    : {}),
+                }}
+              >
+                {f.highlight && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "12px",
+                      right: "12px",
+                      background: "rgba(99,102,241,.12)",
+                      border: "1px solid rgba(99,102,241,.25)",
+                      borderRadius: "20px",
+                      fontSize: "10px",
+                      fontWeight: 700,
+                      letterSpacing: "1px",
+                      textTransform: "uppercase",
+                      color: "#A5B4FC",
+                      padding: "3px 10px",
+                    }}
+                  >
+                    ⭐ Destaque
+                  </div>
+                )}
+                <div
+                  style={{
+                    width: "48px",
+                    height: "48px",
+                    borderRadius: "14px",
+                    background: "rgba(99,102,241,.1)",
+                    border: "1px solid rgba(99,102,241,.2)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "24px",
+                    marginBottom: "18px",
+                  }}
+                >
+                  {f.icon}
+                </div>
+                <h3
+                  style={{
+                    fontSize: "17px",
+                    fontWeight: 700,
+                    marginBottom: "10px",
+                  }}
+                >
+                  {f.title}
+                </h3>
+                <p
+                  style={{
+                    fontSize: "14px",
+                    color: "#94A3B8",
+                    lineHeight: 1.6,
+                  }}
+                >
+                  {f.desc}
+                </p>
+                {f.tag && (
+                  <div
+                    style={{
+                      display: "inline-block",
+                      fontSize: "11px",
+                      fontWeight: 600,
+                      color: "#4ADE80",
+                      background: "rgba(34,197,94,.1)",
+                      border: "1px solid rgba(34,197,94,.2)",
+                      borderRadius: "20px",
+                      padding: "3px 10px",
+                      marginTop: "14px",
+                    }}
+                  >
+                    {f.tag}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── SCREENSHOT DO SISTEMA ────────────────────────────────── */}
+      <section style={{ padding: "72px 0 56px" }}>
+        <div style={S.con}>
+          <div style={{ textAlign: "center", marginBottom: "40px" }}>
+            <span style={S.slabel}>O Sistema</span>
+            <h2 style={{ ...S.stitle, marginBottom: "12px" }}>
+              Veja o JuriOne <span style={GT}>por dentro</span>
+            </h2>
+            <p style={{ ...S.ssub, marginBottom: 0 }}>
+              Interface moderna, intuitiva e desenhada para a rotina do advogado
+              brasileiro
+            </p>
+          </div>
+
+          <div
+            style={{
+              position: "relative",
+              borderRadius: "20px",
+              overflow: "hidden",
+              border: "1px solid rgba(99,102,241,.22)",
+              boxShadow:
+                "0 32px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(99,102,241,.08)",
+            }}
+          >
+            {/* Browser chrome bar */}
+            <div
+              style={{
+                background: "rgba(15,20,40,.97)",
+                borderBottom: "1px solid rgba(99,102,241,.12)",
+                padding: "10px 16px",
+                display: "flex",
+                alignItems: "center",
+                gap: "12px",
+              }}
+            >
+              <div style={{ display: "flex", gap: "6px" }}>
+                {["#EF4444", "#F59E0B", "#22C55E"].map((c) => (
+                  <div
+                    key={c}
+                    style={{
+                      width: "11px",
+                      height: "11px",
+                      borderRadius: "50%",
+                      background: c,
+                      opacity: 0.8,
+                    }}
+                  />
+                ))}
+              </div>
+              <div
+                style={{
+                  flex: 1,
+                  background: "rgba(99,102,241,.07)",
+                  border: "1px solid rgba(99,102,241,.12)",
+                  borderRadius: "6px",
+                  padding: "4px 12px",
+                  fontSize: "11px",
+                  color: "#475569",
+                  textAlign: "center",
+                }}
+              >
+                app.jurione.com.br
+              </div>
+            </div>
+
+            <img
+              src="/tela-do-sistema.png"
+              alt="Tela do sistema JuriOne"
+              style={{ width: "100%", height: "auto", display: "block" }}
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* ── COMO FUNCIONA ────────────────────────────────────────── */}
       <section style={{ padding: "70px 0" }}>
         <div style={S.con}>
@@ -2135,119 +2254,197 @@ export default function Campanha() {
             }}
           >
             {planosLoading && (
-              <div style={{ gridColumn: "1/-1", display: "flex", justifyContent: "center", padding: "40px" }}>
-                <Loader2 style={{ width: "32px", height: "32px", animation: "spin 1s linear infinite", color: "#6366F1" }} />
-              </div>
-            )}
-            {!planosLoading && (campanhaPlanos ?? []).map((plano) => (
               <div
-                key={plano.id}
                 style={{
-                  ...S.card,
-                  ...(plano.popular
-                    ? {
-                        borderColor: "rgba(99,102,241,.4)",
-                        background: "rgba(99,102,241,.06)",
-                      }
-                    : {}),
+                  gridColumn: "1/-1",
+                  display: "flex",
+                  justifyContent: "center",
+                  padding: "40px",
                 }}
               >
-                {/* Header */}
-                <div style={{ marginBottom: "20px" }}>
-                  {plano.popular && (
-                    <div
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "6px",
-                        background: "linear-gradient(135deg, #6366F1, #3B82F6)",
-                        color: "#fff",
-                        fontSize: "11px",
-                        fontWeight: 700,
-                        padding: "4px 12px",
-                        borderRadius: "20px",
-                        marginBottom: "8px",
-                        whiteSpace: "nowrap" as const,
-                      }}
-                    >
-                      ⚡ Mais popular
-                    </div>
-                  )}
-                  {plano.destaque && (
-                    <div
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        background: "rgba(99,102,241,.12)",
-                        border: "1px solid rgba(99,102,241,.25)",
-                        color: "#A5B4FC",
-                        fontSize: "11px",
-                        fontWeight: 700,
-                        padding: "4px 12px",
-                        borderRadius: "20px",
-                        marginBottom: "8px",
-                        whiteSpace: "nowrap" as const,
-                      }}
-                    >
-                      Poder total
-                    </div>
-                  )}
-                  <h3
-                    style={{
-                      fontSize: "20px",
-                      fontWeight: 800,
-                      color: "#E2E8F0",
-                      marginBottom: "4px",
-                    }}
-                  >
-                    {plano.display_name}
-                  </h3>
-                  <p style={{ fontSize: "13px", color: "#64748B" }}>
-                    {plano.subtitulo}
-                  </p>
-                </div>
-
-                {/* Price */}
-                <div style={{ marginBottom: "16px" }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "baseline",
-                      gap: "4px",
-                    }}
-                  >
-                    <span style={{ fontSize: "12px", color: "#94A3B8" }}>
-                      R$
-                    </span>
-                    <span
-                      style={{
-                        fontSize: "30px",
-                        fontWeight: 900,
-                        letterSpacing: "-1px",
-                        color: "#F1F5F9",
-                        lineHeight: 1,
-                      }}
-                    >
-                      {(plano.preco / 100).toLocaleString("pt-BR")}
-                    </span>
-                    <span style={{ fontSize: "13px", color: "#94A3B8" }}>
-                      /mês
-                    </span>
-                  </div>
-                </div>
-
-                {/* Feature groups */}
-                <div
+                <Loader2
                   style={{
-                    flex: 1,
-                    display: "flex",
-                    flexDirection: "column" as const,
-                    gap: "12px",
-                    marginBottom: "16px",
+                    width: "32px",
+                    height: "32px",
+                    animation: "spin 1s linear infinite",
+                    color: "#6366F1",
+                  }}
+                />
+              </div>
+            )}
+            {!planosLoading &&
+              (campanhaPlanos ?? []).map((plano) => (
+                <div
+                  key={plano.id}
+                  style={{
+                    ...S.card,
+                    ...(plano.popular
+                      ? {
+                          borderColor: "rgba(99,102,241,.4)",
+                          background: "rgba(99,102,241,.06)",
+                        }
+                      : {}),
                   }}
                 >
-                  {plano.grupos.map((grupo) => (
-                    <div key={grupo.title}>
+                  {/* Header */}
+                  <div style={{ marginBottom: "20px" }}>
+                    {plano.popular && (
+                      <div
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: "6px",
+                          background:
+                            "linear-gradient(135deg, #6366F1, #3B82F6)",
+                          color: "#fff",
+                          fontSize: "11px",
+                          fontWeight: 700,
+                          padding: "4px 12px",
+                          borderRadius: "20px",
+                          marginBottom: "8px",
+                          whiteSpace: "nowrap" as const,
+                        }}
+                      >
+                        ⚡ Mais popular
+                      </div>
+                    )}
+                    {plano.destaque && (
+                      <div
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          background: "rgba(99,102,241,.12)",
+                          border: "1px solid rgba(99,102,241,.25)",
+                          color: "#A5B4FC",
+                          fontSize: "11px",
+                          fontWeight: 700,
+                          padding: "4px 12px",
+                          borderRadius: "20px",
+                          marginBottom: "8px",
+                          whiteSpace: "nowrap" as const,
+                        }}
+                      >
+                        Poder total
+                      </div>
+                    )}
+                    <h3
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: 800,
+                        color: "#E2E8F0",
+                        marginBottom: "4px",
+                      }}
+                    >
+                      {plano.display_name}
+                    </h3>
+                    <p style={{ fontSize: "13px", color: "#64748B" }}>
+                      {plano.subtitulo}
+                    </p>
+                  </div>
+
+                  {/* Price */}
+                  <div style={{ marginBottom: "16px" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "baseline",
+                        gap: "4px",
+                      }}
+                    >
+                      <span style={{ fontSize: "12px", color: "#94A3B8" }}>
+                        R$
+                      </span>
+                      <span
+                        style={{
+                          fontSize: "30px",
+                          fontWeight: 900,
+                          letterSpacing: "-1px",
+                          color: "#F1F5F9",
+                          lineHeight: 1,
+                        }}
+                      >
+                        {(plano.preco / 100).toLocaleString("pt-BR")}
+                      </span>
+                      <span style={{ fontSize: "13px", color: "#94A3B8" }}>
+                        /mês
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Feature groups */}
+                  <div
+                    style={{
+                      flex: 1,
+                      display: "flex",
+                      flexDirection: "column" as const,
+                      gap: "12px",
+                      marginBottom: "16px",
+                    }}
+                  >
+                    {plano.grupos.map((grupo) => (
+                      <div key={grupo.title}>
+                        <p
+                          style={{
+                            fontSize: "9px",
+                            fontWeight: 600,
+                            textTransform: "uppercase" as const,
+                            letterSpacing: "0.1em",
+                            color: "#64748B",
+                            marginBottom: "6px",
+                          }}
+                        >
+                          {grupo.title}
+                        </p>
+                        <ul
+                          style={{
+                            listStyle: "none",
+                            display: "flex",
+                            flexDirection: "column" as const,
+                            gap: "4px",
+                          }}
+                        >
+                          {grupo.features.map((feature, i) => (
+                            <li
+                              key={i}
+                              style={{
+                                display: "flex",
+                                alignItems: "flex-start",
+                                gap: "6px",
+                              }}
+                            >
+                              <CampStatusDot status={feature.status} />
+                              <span
+                                style={{
+                                  fontSize: "12px",
+                                  lineHeight: 1.3,
+                                  color:
+                                    feature.status === "unavailable"
+                                      ? "rgba(148,163,184,.4)"
+                                      : "#94A3B8",
+                                }}
+                              >
+                                {feature.label}
+                                {feature.note && (
+                                  <span
+                                    style={{
+                                      marginLeft: "4px",
+                                      fontSize: "10px",
+                                      color: "#F59E0B",
+                                      fontWeight: 500,
+                                    }}
+                                  >
+                                    ({feature.note})
+                                  </span>
+                                )}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+
+                    {/* Limits */}
+                    <div>
                       <p
                         style={{
                           fontSize: "9px",
@@ -2258,115 +2455,53 @@ export default function Campanha() {
                           marginBottom: "6px",
                         }}
                       >
-                        {grupo.title}
+                        Limites
                       </p>
-                      <ul
+                      <p
                         style={{
-                          listStyle: "none",
-                          display: "flex",
-                          flexDirection: "column" as const,
-                          gap: "4px",
+                          fontSize: "12px",
+                          color: "#94A3B8",
+                          lineHeight: 1.5,
                         }}
                       >
-                        {grupo.features.map((feature, i) => (
-                          <li
-                            key={i}
-                            style={{
-                              display: "flex",
-                              alignItems: "flex-start",
-                              gap: "6px",
-                            }}
-                          >
-                            <CampStatusDot status={feature.status} />
-                            <span
-                              style={{
-                                fontSize: "12px",
-                                lineHeight: 1.3,
-                                color:
-                                  feature.status === "unavailable"
-                                    ? "rgba(148,163,184,.4)"
-                                    : "#94A3B8",
-                              }}
-                            >
-                              {feature.label}
-                              {feature.note && (
-                                <span
-                                  style={{
-                                    marginLeft: "4px",
-                                    fontSize: "10px",
-                                    color: "#F59E0B",
-                                    fontWeight: 500,
-                                  }}
-                                >
-                                  ({feature.note})
-                                </span>
-                              )}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
+                        {plano.limites}
+                      </p>
                     </div>
-                  ))}
-
-                  {/* Limits */}
-                  <div>
-                    <p
-                      style={{
-                        fontSize: "9px",
-                        fontWeight: 600,
-                        textTransform: "uppercase" as const,
-                        letterSpacing: "0.1em",
-                        color: "#64748B",
-                        marginBottom: "6px",
-                      }}
-                    >
-                      Limites
-                    </p>
-                    <p
-                      style={{
-                        fontSize: "12px",
-                        color: "#94A3B8",
-                        lineHeight: 1.5,
-                      }}
-                    >
-                      {plano.limites}
-                    </p>
                   </div>
-                </div>
 
-                {/* Button */}
-                <button
-                  onClick={() => openModal(plano.nome as PlanName)}
-                  style={{
-                    display: "block",
-                    width: "100%",
-                    textAlign: "center",
-                    fontWeight: 700,
-                    fontSize: "14px",
-                    padding: "11px",
-                    borderRadius: "10px",
-                    cursor: "pointer",
-                    fontFamily: "'Inter', sans-serif",
-                    transition: "all .2s",
-                    ...(plano.popular
-                      ? {
-                          background:
-                            "linear-gradient(135deg, #6366F1, #3B82F6)",
-                          color: "#fff",
-                          border: "none",
-                          boxShadow: "0 0 20px rgba(99,102,241,.3)",
-                        }
-                      : {
-                          background: "transparent",
-                          color: "#E2E8F0",
-                          border: "1px solid rgba(99,102,241,.22)",
-                        }),
-                  }}
-                >
-                  Escolher Plano →
-                </button>
-              </div>
-            ))}
+                  {/* Button */}
+                  <button
+                    onClick={() => openModal(plano.nome as PlanName)}
+                    style={{
+                      display: "block",
+                      width: "100%",
+                      textAlign: "center",
+                      fontWeight: 700,
+                      fontSize: "14px",
+                      padding: "11px",
+                      borderRadius: "10px",
+                      cursor: "pointer",
+                      fontFamily: "'Inter', sans-serif",
+                      transition: "all .2s",
+                      ...(plano.popular
+                        ? {
+                            background:
+                              "linear-gradient(135deg, #6366F1, #3B82F6)",
+                            color: "#fff",
+                            border: "none",
+                            boxShadow: "0 0 20px rgba(99,102,241,.3)",
+                          }
+                        : {
+                            background: "transparent",
+                            color: "#E2E8F0",
+                            border: "1px solid rgba(99,102,241,.22)",
+                          }),
+                    }}
+                  >
+                    Escolher Plano →
+                  </button>
+                </div>
+              ))}
           </div>
 
           {/* Legend */}
