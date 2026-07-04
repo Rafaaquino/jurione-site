@@ -111,13 +111,6 @@ export function AIHighlight() {
               viewport={{ once: true }}
               transition={{ delay: 0.6 }}
             >
-              <Button
-                size="lg"
-                className="gradient-cta text-primary-foreground font-semibold shadow-soft hover:opacity-90 transition-all"
-              >
-                Testar o Chat com IA
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
             </motion.div>
           </div>
 
