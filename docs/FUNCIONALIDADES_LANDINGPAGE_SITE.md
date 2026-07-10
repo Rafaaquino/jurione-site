@@ -1,7 +1,7 @@
 # JuriOne Landing Page — Documentação de Funcionalidades
 
 > Documento de referência para LLMs. Descreve toda a estrutura, fluxos, conteúdo e comportamentos do site `jurione.com.br`.
-> **Atualizado em:** 2026-06-26 · **Versão:** 1.2
+> **Atualizado em:** 2026-07-08 · **Versão:** 1.3
 
 ---
 
@@ -471,7 +471,7 @@ interface CadastroRapidoData {
 ```typescript
 // Busca planos públicos para exibição na landing page e campanha
 fetchPlanosPublicos(): Promise<PlanoPublico[]>
-// GET {VITE_API_URL}/planos/publicos
+// GET {VITE_API_URL}/planos/public
 ```
 
 **Interface `PlanoPublico`** (retorno da API):
