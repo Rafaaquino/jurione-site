@@ -8,6 +8,7 @@ import TermsOfUse from "@/pages/TermsOfUse";
 import LGPD from "@/pages/LGPD";
 import Afiliado from "@/pages/Afiliado";
 import Campanha from "@/pages/Campanha";
+import Feedback from "@/pages/Feedback";
 import "./App.css";
 
 const queryClient = new QueryClient({
@@ -27,6 +28,7 @@ function App() {
           <Route path="/" element={<Index />} />
           <Route path="/campanha" element={<Campanha />} />
           <Route path="/afiliado" element={<Afiliado />} />
+          <Route path="/feedback" element={<Feedback />} />
           <Route path="/politica-privacidade" element={<PrivacyPolicy />} />
           <Route path="/termos-uso" element={<TermsOfUse />} />
           <Route path="/lgpd" element={<LGPD />} />

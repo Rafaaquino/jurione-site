@@ -20,6 +20,12 @@ export interface ApiResponse<T = any> {
   code?: string;
 }
 
+export interface FeedbackFormData {
+  nome: string;
+  email: string;
+  mensagem: string;
+}
+
 export interface CadastroRapidoData {
   nomeEscritorio: string;
   nomeCompleto: string;
@@ -76,6 +82,34 @@ export async function enviarContato(
     return data;
   } catch (error) {
     console.error("Erro ao enviar contato:", error);
+    throw error;
+  }
+}
+
+/**
+ * Enviar feedback (ex: pós trial expirado)
+ */
+export async function enviarFeedback(
+  dados: FeedbackFormData,
+): Promise<ApiResponse> {
+  try {
+    const response = await fetch(`${API_URL}/feedback`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(dados),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Erro ao enviar feedback");
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Erro ao enviar feedback:", error);
     throw error;
   }
 }
