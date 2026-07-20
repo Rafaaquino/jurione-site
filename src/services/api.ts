@@ -30,12 +30,13 @@ export interface CadastroRapidoData {
   nomeEscritorio: string;
   nomeCompleto: string;
   email: string;
+  telefone?: string;
   senha: string;
   source?: string;
 }
 
 /**
- * Cadastro rápido via landing page de campanha (4 campos, sem confirmarSenha)
+ * Cadastro rápido via landing page de campanha (sem confirmarSenha; telefone opcional)
  */
 export async function cadastroRapido(
   dados: CadastroRapidoData,

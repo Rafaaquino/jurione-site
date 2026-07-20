@@ -23,6 +23,18 @@ const PLAN_LABELS: Record<PlanName, string> = {
   empresarial: "Plano Empresarial — R$2.800/mês",
 };
 
+const formatPhone = (value: string): string => {
+  const numbers = value.replace(/\D/g, "");
+  if (numbers.length <= 2) {
+    return numbers;
+  } else if (numbers.length <= 6) {
+    return `(${numbers.slice(0, 2)}) ${numbers.slice(2)}`;
+  } else if (numbers.length <= 10) {
+    return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 6)}-${numbers.slice(6)}`;
+  }
+  return `(${numbers.slice(0, 2)}) ${numbers.slice(2, 7)}-${numbers.slice(7, 11)}`;
+};
+
 const gtmPush = (
   payload: { event: string; [key: string]: unknown },
   callback?: () => void,
@@ -69,6 +81,7 @@ function CadastroModal({
     nomeEscritorio: "",
     nomeCompleto: "",
     email: "",
+    telefone: "",
     senha: "",
   });
   const [errs, setErrs] = useState<Record<string, string>>({});
@@ -86,7 +99,13 @@ function CadastroModal({
   }, [state]);
 
   const reset = () => {
-    setVals({ nomeEscritorio: "", nomeCompleto: "", email: "", senha: "" });
+    setVals({
+      nomeEscritorio: "",
+      nomeCompleto: "",
+      email: "",
+      telefone: "",
+      senha: "",
+    });
     setErrs({});
     setErrorMsg("");
     setState("idle");
@@ -111,6 +130,8 @@ function CadastroModal({
       e.email = "Informe um e-mail válido";
     if (vals.senha.length < 8)
       e.senha = "A senha deve ter pelo menos 8 caracteres";
+    if (vals.telefone.trim() && vals.telefone.replace(/\D/g, "").length < 10)
+      e.telefone = "Informe um telefone válido com DDD";
     return e;
   };
 
@@ -129,6 +150,7 @@ function CadastroModal({
         nomeEscritorio: vals.nomeEscritorio.trim(),
         nomeCompleto: vals.nomeCompleto.trim(),
         email: emailTrimmed,
+        telefone: vals.telefone.trim() || undefined,
         senha: vals.senha,
         source: "campanha",
       });
@@ -299,7 +321,7 @@ function CadastroModal({
                   marginBottom: "6px",
                 }}
               >
-                Nome do escritório
+                Nome do escritório *
               </label>
               <input
                 style={inp(!!errs.nomeEscritorio)}
@@ -331,7 +353,7 @@ function CadastroModal({
                   marginBottom: "6px",
                 }}
               >
-                Seu nome completo
+                Seu nome completo *
               </label>
               <input
                 style={inp(!!errs.nomeCompleto)}
@@ -363,7 +385,7 @@ function CadastroModal({
                   marginBottom: "6px",
                 }}
               >
-                E-mail profissional
+                E-mail profissional *
               </label>
               <input
                 style={inp(!!errs.email)}
@@ -395,7 +417,42 @@ function CadastroModal({
                   marginBottom: "6px",
                 }}
               >
-                Senha
+                Telefone
+              </label>
+              <input
+                style={inp(!!errs.telefone)}
+                type="tel"
+                placeholder="(00) 00000-0000"
+                value={vals.telefone}
+                onChange={(e) =>
+                  setVals((v) => ({
+                    ...v,
+                    telefone: formatPhone(e.target.value),
+                  }))
+                }
+              />
+              {errs.telefone && (
+                <p
+                  style={{
+                    fontSize: "12px",
+                    color: "#F87171",
+                    marginBottom: "14px",
+                  }}
+                >
+                  {errs.telefone}
+                </p>
+              )}
+
+              <label
+                style={{
+                  display: "block",
+                  fontSize: "13px",
+                  fontWeight: 500,
+                  color: "#94A3B8",
+                  marginBottom: "6px",
+                }}
+              >
+                Senha *
               </label>
               <div
                 style={{
