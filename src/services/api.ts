@@ -33,6 +33,7 @@ export interface CadastroRapidoData {
   telefone?: string;
   senha: string;
   source?: string;
+  aceiteTermos: boolean;
 }
 
 /**

@@ -83,6 +83,7 @@ function CadastroModal({
     email: "",
     telefone: "",
     senha: "",
+    aceiteTermos: false,
   });
   const [errs, setErrs] = useState<Record<string, string>>({});
 
@@ -105,6 +106,7 @@ function CadastroModal({
       email: "",
       telefone: "",
       senha: "",
+      aceiteTermos: false,
     });
     setErrs({});
     setErrorMsg("");
@@ -132,6 +134,8 @@ function CadastroModal({
       e.senha = "A senha deve ter pelo menos 8 caracteres";
     if (vals.telefone.trim() && vals.telefone.replace(/\D/g, "").length < 10)
       e.telefone = "Informe um telefone válido com DDD";
+    if (!vals.aceiteTermos)
+      e.aceiteTermos = "Você deve aceitar os Termos de Uso para continuar";
     return e;
   };
 
@@ -153,6 +157,7 @@ function CadastroModal({
         telefone: vals.telefone.trim() || undefined,
         senha: vals.senha,
         source: "campanha",
+        aceiteTermos: vals.aceiteTermos,
       });
       const redirectUrl = `${APP_URL}/auth/login?email=${encodeURIComponent(emailTrimmed)}&source=campanha`;
       gtmPush(
@@ -504,32 +509,57 @@ function CadastroModal({
                 </p>
               )}
 
-              <p
+              <label
                 style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "8px",
                   fontSize: "12px",
                   color: "#64748B",
-                  marginBottom: "22px",
+                  marginBottom: errs.aceiteTermos ? "6px" : "22px",
                   lineHeight: 1.65,
+                  cursor: "pointer",
                 }}
               >
-                Ao criar sua conta você concorda com os{" "}
-                <a
-                  href="/termos-uso"
-                  target="_blank"
-                  style={{ color: "#A5B4FC", textDecoration: "none" }}
+                <input
+                  type="checkbox"
+                  checked={vals.aceiteTermos}
+                  onChange={(e) =>
+                    setVals((v) => ({ ...v, aceiteTermos: e.target.checked }))
+                  }
+                  style={{ marginTop: "2px", flexShrink: 0 }}
+                />
+                <span>
+                  Li e aceito os{" "}
+                  <a
+                    href="/termos-uso"
+                    target="_blank"
+                    style={{ color: "#A5B4FC", textDecoration: "none" }}
+                  >
+                    Termos de Uso
+                  </a>{" "}
+                  e a{" "}
+                  <a
+                    href="/politica-privacidade"
+                    target="_blank"
+                    style={{ color: "#A5B4FC", textDecoration: "none" }}
+                  >
+                    Política de Privacidade
+                  </a>
+                  .
+                </span>
+              </label>
+              {errs.aceiteTermos && (
+                <p
+                  style={{
+                    fontSize: "12px",
+                    color: "#F87171",
+                    marginBottom: "16px",
+                  }}
                 >
-                  Termos de Uso
-                </a>{" "}
-                e a{" "}
-                <a
-                  href="/politica-privacidade"
-                  target="_blank"
-                  style={{ color: "#A5B4FC", textDecoration: "none" }}
-                >
-                  Política de Privacidade
-                </a>
-                .
-              </p>
+                  {errs.aceiteTermos}
+                </p>
+              )}
 
               <button
                 onClick={handleSubmit}

@@ -1,7 +1,7 @@
 # JuriOne Landing Page — Documentação de Funcionalidades
 
 > Documento de referência para LLMs. Descreve toda a estrutura, fluxos, conteúdo e comportamentos do site `jurione.com.br`.
-> **Atualizado em:** 2026-07-08 · **Versão:** 1.3
+> **Atualizado em:** 2026-09-10 · **Versão:** 1.4
 
 ---
 
@@ -347,7 +347,7 @@ Página standalone criada para receber tráfego pago (Google Ads, Meta Ads). **N
 
 ### 6.2 Modal de Cadastro Rápido (`CadastroModal`)
 
-Abre inline na mesma página (sem redirecionar para `jurione.app.br`). 4 campos:
+Abre inline na mesma página (sem redirecionar para `jurione.app.br`). 4 campos + checkbox de aceite:
 
 | Campo | Nome interno | Validação |
 |-------|-------------|-----------|
@@ -355,6 +355,7 @@ Abre inline na mesma página (sem redirecionar para `jurione.app.br`). 4 campos:
 | Seu nome completo | `nomeCompleto` | min 3 chars |
 | E-mail profissional | `email` | formato e-mail |
 | Senha | `senha` | min 8 chars + toggle Eye/EyeOff |
+| Li e aceito os Termos de Uso *(novo)* | `aceiteTermos` | checkbox obrigatório — bloqueia submit se desmarcado; antes era só texto decorativo sem validação |
 
 **Sem campo `confirmarSenha`** — removido intencionalmente para reduzir atrito e maximizar conversão. O usuário pode redefinir a senha a qualquer momento.
 
@@ -409,6 +410,8 @@ O evento `trial_signup` é o **key event** configurado no Google Ads para contab
 
 Cria em uma única transação: `Tenant` (status `TRIAL`, 14 dias) + `Usuario` (`ADMINISTRADOR`, `primeiro_acesso: true`) + `Assinatura` (status `trialing`).
 
+**Aceite dos Termos de Uso** *(novo)*: `aceiteTermos: true` é obrigatório no body — o backend rejeita com `400 TERMS_NOT_ACCEPTED` se ausente/falso. Ao criar o `Usuario`, grava prova do aceite (`termos_aceitos`, `termos_aceitos_em`, `termos_versao`, `termos_aceitos_ip`). Antes desta mudança o endpoint criava a conta sem validar nem registrar qualquer aceite.
+
 ---
 
 ## 7. Sistema de Afiliados
@@ -459,8 +462,10 @@ interface CadastroRapidoData {
   nomeEscritorio: string;
   nomeCompleto: string;
   email: string;
+  telefone?: string;
   senha: string;
   source?: string;  // padrão: "campanha"
+  aceiteTermos: boolean;  // obrigatório — checkbox do modal (novo)
 }
 ```
 

@@ -5,7 +5,7 @@ const TermsOfUse = () => {
   const legalEmail = SITE_CONTACT.legalEmail || SITE_CONTACT.contactEmail;
 
   return (
-    <LegalLayout title="Termos de Uso" lastUpdated="15 de dezembro de 2024">
+    <LegalLayout title="Termos de Uso" lastUpdated="10 de setembro de 2026">
       <section>
         <h2>1. Aceitação dos Termos</h2>
         <p>
@@ -236,30 +236,71 @@ const TermsOfUse = () => {
       </section>
 
       <section>
-        <h2>11. Disponibilidade e Interrupções</h2>
-        <p>Nos esforçamos para manter a plataforma disponível 24/7, mas:</p>
-        <ul>
-          <li>
-            Podem ocorrer interrupções para manutenção programada (com aviso
-            prévio)
-          </li>
-          <li>
-            Interrupções não programadas podem ocorrer por causas externas
-          </li>
-          <li>
-            Não garantimos disponibilidade 100% e não nos responsabilizamos por
-            perdas decorrentes de indisponibilidade temporária
-          </li>
-        </ul>
+        <h2>11. Disponibilidade, Interrupções e Dependência de Terceiros</h2>
+
+        <h3>11.1. Nível de Esforço</h3>
+        <p>
+          Empregamos esforços comercialmente razoáveis para manter a
+          plataforma disponível de forma contínua. A JuriOne <strong>não
+          garante um percentual mínimo de disponibilidade (SLA numérico)</strong>{" "}
+          e não assume obrigação de resultado quanto ao tempo de atividade do
+          sistema.
+        </p>
+
+        <h3>11.2. Manutenção Programada</h3>
+        <p>
+          Podem ocorrer janelas de manutenção programada, preferencialmente
+          fora do horário comercial, com aviso prévio pelos canais de
+          comunicação da plataforma sempre que viável.
+        </p>
+
+        <h3>11.3. Dependência de Sistemas e Provedores Externos</h3>
+        <p>
+          A plataforma JuriOne integra e depende de sistemas, provedores de
+          infraestrutura e serviços de terceiros que não estão sob nosso
+          controle, incluindo, mas não se limitando a: provedores de
+          hospedagem e nuvem, provedores de inteligência artificial (ex.:
+          OpenAI), processador de pagamentos (Stripe), serviços de envio de
+          e-mail, armazenamento de arquivos (S3/DigitalOcean Spaces), APIs
+          públicas de consulta (ex.: ViaCEP, BrasilAPI) e sistemas dos
+          tribunais e órgãos judiciais consultados ou integrados pela
+          plataforma.
+        </p>
+        <p>
+          Indisponibilidades, lentidão, instabilidade, alterações ou
+          descontinuidade desses sistemas e provedores externos estão fora do
+          nosso controle. A JuriOne não se responsabiliza por falhas,
+          interrupções ou indisponibilidade da plataforma decorrentes,
+          direta ou indiretamente, de causas externas a nós, incluindo falhas
+          de provedores terceiros, ataques cibernéticos a terceiros, quedas de
+          conectividade, caso fortuito e força maior.
+        </p>
+
+        <h3>11.4. Comunicação de Incidentes</h3>
+        <p>
+          Em caso de indisponibilidade relevante, buscaremos informar os
+          usuários pelos canais de comunicação disponíveis (e-mail e/ou
+          notificação na plataforma), na medida do razoável e tão logo
+          seja possível.
+        </p>
+
+        <h3>11.5. Ausência de Reembolso ou Crédito Automático</h3>
+        <p>
+          A indisponibilidade temporária da plataforma, por si só, não gera
+          direito a reembolso, crédito, desconto ou indenização. O único
+          remédio contratual em caso de indisponibilidade é o previsto na
+          Cláusula 12 (Limitação de Responsabilidade) abaixo.
+        </p>
       </section>
 
       <section>
         <h2>12. Limitação de Responsabilidade</h2>
-        <p>Na máxima extensão permitida por lei:</p>
+        <p>Na máxima extensão permitida pela legislação brasileira aplicável:</p>
         <ul>
           <li>
-            A plataforma é fornecida "como está", sem garantias expressas ou
-            implícitas
+            A plataforma é fornecida "como está" e "conforme disponível", sem
+            garantias expressas ou implícitas de disponibilidade contínua ou
+            ininterrupta
           </li>
           <li>
             Não nos responsabilizamos por decisões profissionais tomadas com
@@ -270,8 +311,24 @@ const TermsOfUse = () => {
             específicas
           </li>
           <li>
-            Nossa responsabilidade total está limitada ao valor pago nos últimos
-            12 meses
+            Não nos responsabilizamos por indisponibilidade, erro ou falha
+            causados, no todo ou em parte, por sistemas, provedores ou
+            serviços de terceiros dos quais a plataforma dependa (conforme
+            Cláusula 11.3), por caso fortuito ou força maior
+          </li>
+          <li>
+            Não nos responsabilizamos por danos indiretos, lucros cessantes,
+            perda de chance, perda de clientela ou danos decorrentes de
+            prazos processuais perdidos em razão de indisponibilidade
+            temporária da plataforma — cabendo sempre ao usuário adotar
+            controles próprios e alternativos para o acompanhamento de prazos
+            judiciais
+          </li>
+          <li>
+            Nossa responsabilidade total e agregada, em qualquer hipótese,
+            está limitada ao valor efetivamente pago pelo usuário à JuriOne
+            nos 12 (doze) meses anteriores ao evento que originou a
+            reclamação
           </li>
           <li>
             Não nos responsabilizamos por perda de dados resultante de uso
