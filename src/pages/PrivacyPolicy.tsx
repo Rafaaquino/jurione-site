@@ -5,9 +5,9 @@ const PrivacyPolicy = () => {
   const privacyEmail = SITE_CONTACT.privacyEmail || SITE_CONTACT.contactEmail;
 
   return (
-    <LegalLayout 
-      title="Política de Privacidade" 
-      lastUpdated="15 de dezembro de 2024"
+    <LegalLayout
+      title="Política de Privacidade"
+      lastUpdated="15 de setembro de 2026"
     >
       <section>
         <h2>1. Informações Coletadas</h2>
@@ -61,6 +61,29 @@ const PrivacyPolicy = () => {
           <li>Endereço IP</li>
           <li>Registros de ações relevantes para segurança, suporte e auditoria</li>
         </ul>
+
+        <h3>1.6. Dados de Integrações com Calendários Externos</h3>
+        <p>
+          Caso você opte por conectar sua conta Google à plataforma (integração com Google
+          Calendar), coletamos e tratamos adicionalmente:
+        </p>
+        <ul>
+          <li>E-mail da conta Google conectada</li>
+          <li>
+            Tokens de acesso e atualização (access/refresh token) emitidos pelo Google,
+            armazenados de forma cifrada
+          </li>
+          <li>
+            Dados dos eventos da sua agenda JuriOne (título, descrição, data e horário)
+            enviados ao Google para manter a sincronização
+          </li>
+        </ul>
+        <p>
+          Essa integração é opcional e só é ativada mediante sua autorização explícita
+          (consentimento OAuth do Google). Você pode desconectá-la a qualquer momento na
+          plataforma; ao desconectar, os tokens armazenados são excluídos permanentemente,
+          não apenas invalidados.
+        </p>
       </section>
 
       <section>
@@ -73,6 +96,10 @@ const PrivacyPolicy = () => {
           <li>Geração de petições e documentos jurídicos com inteligência artificial</li>
           <li>Gestão de processos, clientes e contratos</li>
           <li>Envio de notificações sobre prazos, movimentações e eventos importantes</li>
+          <li>
+            Sincronização de eventos e compromissos da agenda com calendários externos
+            (Google Calendar), mediante conexão e autorização explícita do usuário
+          </li>
           <li>Melhoria contínua da plataforma e experiência do usuário</li>
           <li>Cumprimento de obrigações legais e regulatórias</li>
           <li>Comunicação sobre atualizações, novidades e suporte técnico</li>
@@ -96,6 +123,22 @@ const PrivacyPolicy = () => {
             da solicitação e as políticas do provedor aplicável.
           </li>
           <li>
+            <strong>Integração com Google Calendar:</strong> Caso você opte por conectar sua conta
+            Google, enviamos ao Google os dados dos eventos da sua agenda JuriOne (título, descrição,
+            data e horário) para mantê-los sincronizados, dentro do escopo de acesso a eventos
+            autorizado por você no consentimento OAuth. Essa integração é opcional e pode ser
+            desconectada a qualquer momento na plataforma. O uso e a transferência de informações
+            recebidas das APIs do Google por meio desta integração seguem a{" "}
+            <a
+              href="https://developers.google.com/terms/api-services-user-data-policy"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Política de Dados do Usuário dos Serviços de API do Google
+            </a>
+            , incluindo os requisitos de Uso Limitado (Limited Use).
+          </li>
+          <li>
             <strong>Obrigações Legais:</strong> Quando necessário para cumprir leis, regulamentos 
             ou processos judiciais
           </li>
@@ -113,7 +156,10 @@ const PrivacyPolicy = () => {
         </p>
         <ul>
           <li>Criptografia de dados em trânsito (HTTPS/TLS)</li>
-          <li>Criptografia de dados sensíveis (ex.: chaves de API), quando aplicável</li>
+          <li>
+            Criptografia de dados sensíveis (ex.: chaves de API, tokens de integrações como
+            Google Calendar), quando aplicável
+          </li>
           <li>Autenticação baseada em JWT (JSON Web Tokens)</li>
           <li>Isolamento multi-tenant garantindo que dados de diferentes empresas não se misturem</li>
           <li>Controle de acesso baseado em níveis (Administrador, Sênior, Pleno, Júnior)</li>

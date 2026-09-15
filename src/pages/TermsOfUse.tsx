@@ -5,7 +5,7 @@ const TermsOfUse = () => {
   const legalEmail = SITE_CONTACT.legalEmail || SITE_CONTACT.contactEmail;
 
   return (
-    <LegalLayout title="Termos de Uso" lastUpdated="10 de setembro de 2026">
+    <LegalLayout title="Termos de Uso" lastUpdated="15 de setembro de 2026">
       <section>
         <h2>1. Aceitação dos Termos</h2>
         <p>
@@ -218,7 +218,35 @@ const TermsOfUse = () => {
       </section>
 
       <section>
-        <h2>10. Isolamento Multi-Tenant</h2>
+        <h2>10. Integrações com Terceiros</h2>
+        <p>
+          A plataforma oferece integrações opcionais com serviços de terceiros, como o
+          Google Calendar, para sincronização de eventos e compromissos da sua agenda.
+        </p>
+        <ul>
+          <li>
+            A integração só é ativada mediante conexão e autorização explícita do usuário
+            (consentimento OAuth junto ao provedor externo)
+          </li>
+          <li>
+            Você pode desconectar a integração a qualquer momento diretamente na plataforma,
+            o que revoga o acesso concedido e exclui as credenciais armazenadas
+          </li>
+          <li>
+            A JuriOne não se responsabiliza por indisponibilidade, alteração de
+            funcionalidades, políticas ou descontinuidade do serviço de terceiros
+            integrado, tampouco por eventos ou dados que deixem de sincronizar em
+            decorrência de falhas do provedor externo
+          </li>
+          <li>
+            O uso da integração está sujeito, cumulativamente, a estes Termos e aos termos
+            de uso do provedor externo (ex.: Google)
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>11. Isolamento Multi-Tenant</h2>
         <p>
           Implementamos isolamento rigoroso entre diferentes tenants (empresas).
           Garantimos que:
@@ -236,9 +264,9 @@ const TermsOfUse = () => {
       </section>
 
       <section>
-        <h2>11. Disponibilidade, Interrupções e Dependência de Terceiros</h2>
+        <h2>12. Disponibilidade, Interrupções e Dependência de Terceiros</h2>
 
-        <h3>11.1. Nível de Esforço</h3>
+        <h3>12.1. Nível de Esforço</h3>
         <p>
           Empregamos esforços comercialmente razoáveis para manter a
           plataforma disponível de forma contínua. A JuriOne <strong>não
@@ -247,14 +275,14 @@ const TermsOfUse = () => {
           sistema.
         </p>
 
-        <h3>11.2. Manutenção Programada</h3>
+        <h3>12.2. Manutenção Programada</h3>
         <p>
           Podem ocorrer janelas de manutenção programada, preferencialmente
           fora do horário comercial, com aviso prévio pelos canais de
           comunicação da plataforma sempre que viável.
         </p>
 
-        <h3>11.3. Dependência de Sistemas e Provedores Externos</h3>
+        <h3>12.3. Dependência de Sistemas e Provedores Externos</h3>
         <p>
           A plataforma JuriOne integra e depende de sistemas, provedores de
           infraestrutura e serviços de terceiros que não estão sob nosso
@@ -262,9 +290,9 @@ const TermsOfUse = () => {
           hospedagem e nuvem, provedores de inteligência artificial (ex.:
           OpenAI), processador de pagamentos (Stripe), serviços de envio de
           e-mail, armazenamento de arquivos (S3/DigitalOcean Spaces), APIs
-          públicas de consulta (ex.: ViaCEP, BrasilAPI) e sistemas dos
-          tribunais e órgãos judiciais consultados ou integrados pela
-          plataforma.
+          públicas de consulta (ex.: ViaCEP, BrasilAPI), integrações de
+          calendário (ex.: Google Calendar) e sistemas dos tribunais e órgãos
+          judiciais consultados ou integrados pela plataforma.
         </p>
         <p>
           Indisponibilidades, lentidão, instabilidade, alterações ou
@@ -276,7 +304,7 @@ const TermsOfUse = () => {
           conectividade, caso fortuito e força maior.
         </p>
 
-        <h3>11.4. Comunicação de Incidentes</h3>
+        <h3>12.4. Comunicação de Incidentes</h3>
         <p>
           Em caso de indisponibilidade relevante, buscaremos informar os
           usuários pelos canais de comunicação disponíveis (e-mail e/ou
@@ -284,17 +312,17 @@ const TermsOfUse = () => {
           seja possível.
         </p>
 
-        <h3>11.5. Ausência de Reembolso ou Crédito Automático</h3>
+        <h3>12.5. Ausência de Reembolso ou Crédito Automático</h3>
         <p>
           A indisponibilidade temporária da plataforma, por si só, não gera
           direito a reembolso, crédito, desconto ou indenização. O único
           remédio contratual em caso de indisponibilidade é o previsto na
-          Cláusula 12 (Limitação de Responsabilidade) abaixo.
+          Cláusula 13 (Limitação de Responsabilidade) abaixo.
         </p>
       </section>
 
       <section>
-        <h2>12. Limitação de Responsabilidade</h2>
+        <h2>13. Limitação de Responsabilidade</h2>
         <p>Na máxima extensão permitida pela legislação brasileira aplicável:</p>
         <ul>
           <li>
@@ -314,7 +342,7 @@ const TermsOfUse = () => {
             Não nos responsabilizamos por indisponibilidade, erro ou falha
             causados, no todo ou em parte, por sistemas, provedores ou
             serviços de terceiros dos quais a plataforma dependa (conforme
-            Cláusula 11.3), por caso fortuito ou força maior
+            Cláusula 12.3), por caso fortuito ou força maior
           </li>
           <li>
             Não nos responsabilizamos por danos indiretos, lucros cessantes,
@@ -338,7 +366,7 @@ const TermsOfUse = () => {
       </section>
 
       <section>
-        <h2>13. Rescisão</h2>
+        <h2>14. Rescisão</h2>
         <p>
           Podemos encerrar ou suspender sua conta imediatamente, sem aviso
           prévio, se você:
@@ -356,7 +384,7 @@ const TermsOfUse = () => {
       </section>
 
       <section>
-        <h2>14. Alterações nos Termos</h2>
+        <h2>15. Alterações nos Termos</h2>
         <p>
           Reservamo-nos o direito de modificar estes Termos de Uso a qualquer
           momento. Alterações significativas serão comunicadas por e-mail ou
@@ -366,7 +394,7 @@ const TermsOfUse = () => {
       </section>
 
       <section>
-        <h2>15. Lei Aplicável e Foro</h2>
+        <h2>16. Lei Aplicável e Foro</h2>
         <p>
           Estes Termos são regidos pelas leis brasileiras. Qualquer disputa será
           resolvida no foro do domicílio do controlador, salvo disposição legal
@@ -375,7 +403,7 @@ const TermsOfUse = () => {
       </section>
 
       <section>
-        <h2>16. Contato</h2>
+        <h2>17. Contato</h2>
         <p>Para questões sobre estes Termos de Uso:</p>
         <ul>
           {legalEmail ? (
