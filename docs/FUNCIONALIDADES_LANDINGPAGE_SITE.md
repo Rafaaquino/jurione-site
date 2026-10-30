@@ -559,6 +559,7 @@ SITE_CONTACT = {
 |------|---------|
 | Google Analytics 4 | ID: `G-YLZS2EYW0W` |
 | Google Tag Manager | Integrado — tracking de afiliados e eventos de campanha (`trial_signup`, `signup_modal_open`, `signup_error`, `faq_click`) |
+| Ambientes | Google Ads, GA4 e GTM (incluindo o `noscript`) só existem no HTML do build de produção. Em `npm run dev` e `npm run build:dev` o plugin `stripGoogleTags` (`vite.config.ts`) remove os trechos entre `google-tags:start` e `google-tags:end` do `index.html` |
 | Structured Data | JSON-LD: `Organization`, `SoftwareApplication`, `FAQPage` |
 | Sitemap | `public/sitemap.xml` |
 | robots.txt | Configurado na raiz |

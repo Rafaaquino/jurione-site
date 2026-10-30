@@ -20,6 +20,22 @@ function devCspAllowLocalApi(): Plugin {
   };
 }
 
+// Google Ads, GA4 e GTM só devem rodar em produção. Fora dela (vite dev e
+// build:dev) este plugin remove do HTML os trechos entre os marcadores
+// `google-tags:start` / `google-tags:end`, para o tráfego local não entrar
+// nas métricas. O build de produção mantém o HTML intacto.
+function stripGoogleTags(): Plugin {
+  return {
+    name: "strip-google-tags",
+    transformIndexHtml(html) {
+      return html.replace(
+        /[ \t]*<!-- google-tags:start[\s\S]*?<!-- google-tags:end -->\r?\n?/g,
+        "",
+      );
+    },
+  };
+}
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode, isSsrBuild }) => ({
   base: "/",
@@ -32,6 +48,7 @@ export default defineConfig(({ mode, isSsrBuild }) => ({
     // componentTagger só roda no dev client — nunca no build SSR
     mode === "development" && !isSsrBuild && componentTagger(),
     mode === "development" && !isSsrBuild && devCspAllowLocalApi(),
+    mode !== "production" && !isSsrBuild && stripGoogleTags(),
   ].filter(Boolean),
   resolve: {
     alias: {
